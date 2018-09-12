@@ -1,17 +1,23 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
-import GameList from './components/GameList';
 import UserList from './components/UserList';
 
 class App extends Component {
+   state = {
+    users: []
+  }
   componentDidMount() {
-    console.log("App mounted");
+    fetch("http://localhost:3000/api/v1/users")
+      .then(resp => resp.json())
+      .then(users => { this.setState({
+        users
+      })
+    })
   }
   render() {
     return (
       <div className="App">
-        <UserList />
+        <UserList users={this.state.users}/>
       </div>
     );
   }

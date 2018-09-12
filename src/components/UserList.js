@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class UserList extends Component {
   render() {
@@ -24,6 +25,10 @@ UserList.defaultProps = {
       email: 'TestEmail2'
     }
   ]
+}
+
+UserList.propTypes = {
+  users: PropTypes.array
 }
 
 export default UserList;

@@ -6,6 +6,7 @@ import LoginForm from './components/LoginForm';
 import NavBar from './components/NavBar';
 import UserGames from './components/UserGames';
 import SignupForm from './components/SignupForm';
+import UserHome from './components/UserHome';
 
 class App extends Component {
 constructor(props) {
@@ -16,6 +17,8 @@ constructor(props) {
       currentUser: {}
     }
   };
+  this.renderContent = this.renderContent.bind(this);
+  this.handlePageChange = this.handlePageChange.bind(this);
 }
 
 
@@ -65,12 +68,18 @@ constructor(props) {
   showWelcome = () => {
     if(!!this.state.auth.currentUser.id) {
       this.setState({
-        activeItem: 'user-games'
+        activeItem: 'user-home'
       })
     }
   }
 
   handleNavBarClick = (e) => {
+    this.setState({
+      activeItem: e.target.id
+    })
+  }
+
+  handlePageChange(e) {
     this.setState({
       activeItem: e.target.id
     })
@@ -88,6 +97,8 @@ constructor(props) {
         showWelcome={this.showWelcome}
         onLogin={this.handleLogin}
              />;
+    case 'user-home':
+      return <UserHome user={this.state.auth.currentUser} changePage={this.handlePageChange}/>;
     case 'user-games':
       return <UserGames user={this.state.auth.currentUser} />;
     default:
@@ -97,6 +108,7 @@ constructor(props) {
 
   render() {
     const loggedIn = !!this.state.auth.currentUser.id;
+
     return (
       <div className="App">
         <NavBar
@@ -107,14 +119,6 @@ constructor(props) {
         />
         {this.renderContent()}
 
-        {/* {loggedIn ?
-          (
-            <UserGames user={this.state.auth.currentUser} />
-          ) :
-          (
-            <LoginForm onLogin={this.handleLogin} showWelcome={this.showWelcome} works={this.state.works}/>
-          )
-        } */}
       </div>
     );
   }

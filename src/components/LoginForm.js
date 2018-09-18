@@ -17,19 +17,34 @@ class LoginForm extends Component {
   }
 
   handleSubmit = (e) => {
-    e.preventDefault()
-  }
+    e.preventDefault();
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(this.state.fields)
+    }
+    fetch("http://localhost:3000/api/v1/login", options)
+      .then(resp => resp.json())
+      .then(user => {
+        this.props.onLogin(user)
+      })
+      // If login works do this
+      .then(() => this.props.showWelcome())
+  };
 
   render() {
+    const { fields } = this.state
     return (
-      // const { fields } = this.state
       <div className="LoginForm">
         <form onSubmit={this.handleSubmit}>
           <div className="form-input username-input">
             <input type="text"
               name="username"
               placeholder="Username"
-              value={this.state.fields.username}
+              value={fields.username}
               onChange={this.handleChange}
             />
           </div>
@@ -37,7 +52,7 @@ class LoginForm extends Component {
             <input type="password"
               name="password"
               placeholder="Password"
-              value={this.state.fields.password}
+              value={fields.password}
               onChange={this.handleChange}
             />
           </div>
@@ -45,6 +60,7 @@ class LoginForm extends Component {
             <button type="submit">Submit</button>
           </div>
         </form>
+        <h3 id="signup" onClick={this.props.onNavBarClick}>Not a member? Click here to sign up</h3>
       </div>
     )
   }

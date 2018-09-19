@@ -5,21 +5,35 @@ export default class SyncGamesPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: ''
+      bgg_username: ''
     }
     this.handleInputChange = this.handleInputChange.bind(this);
     this.syncGames = this.syncGames.bind(this);
   }
 
+
+
   handleInputChange(e) {
     this.setState({
-      username: e.target.value
+      bgg_username: e.target.value
     })
   }
 
   syncGames(e) {
     e.preventDefault();
-    console.log(this.state.username);
+    console.log(this.state.bgg_username);
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(this.state)
+    }
+    fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}/sync`, options)
+      .then(resp => resp.json())
+      .then(console.log)
+      // If login works do this
   }
   render() {
     return (
@@ -29,9 +43,9 @@ export default class SyncGamesPage extends Component {
           <Form.Field>
             <label>BGG username</label>
             <input type="text"
-              placeholder="username"
-              name="username"
-              value={this.state.username}
+              placeholder="bgg username"
+              name="bgg_username"
+              value={this.state.bgg_username}
               onChange={this.handleInputChange}
             />
           </Form.Field>

@@ -30,3 +30,14 @@
 ul {
   list-style: none;
 }
+
+.container {
+  /* margin-top: 100px; */
+  padding-top: 100px;
+
+}
+
+.segment {
+  overflow: auto;
+  max-height: 85vh;
+}

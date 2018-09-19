@@ -10,11 +10,14 @@ export default class NavBar extends Component {
     const loggedIn = !!this.props.currentUser.id
     console.log(this.props);
     return (
-      <Menu>
+      <Menu className="NavBar" fixed="top">
         {loggedIn ?
           (
-            <Menu.Item>
-              You Are Logged In
+            <Menu.Item
+              id="user-home"
+              onClick={this.props.onNavBarClick}
+            >
+              Your Home
             </Menu.Item>
           ) :
           (
@@ -35,6 +38,7 @@ export default class NavBar extends Component {
             Log In
           </Menu.Item>
           )}
+
       </Menu>
     )
   }

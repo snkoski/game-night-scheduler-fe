@@ -45,7 +45,7 @@ export default class SignupForm extends Component {
 
   render() {
     return (
-      <Form className="SignupForm" onSubmit={this.handleSubmit}>
+      <Form className="SignupForm container" onSubmit={this.handleSubmit}>
         <h1>SIGN UP</h1>
         <Form.Field>
           <label>Username</label>

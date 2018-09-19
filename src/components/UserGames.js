@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { List } from 'semantic-ui-react';
 
 import GameCard from './GameCard';
 
@@ -23,15 +24,16 @@ export default class UserGames extends Component {
 
 
     render() {
+      console.log(this.state.games.length);
       return(
-        <div>
-          <ul>
+        <div className="UserGames container segment ui">
+          <h3>You have {this.state.games.length} games</h3>
+          <List selection verticalAlign="middle">
             {this.state.games ? this.state.games.map((game) => {
               return <GameCard key={game.name} game={game} />
-            }) :
-            <h1>{this.props.user.id}</h1>
+            }) : null
             }
-          </ul>
+          </List>
         </div>
       )
     }

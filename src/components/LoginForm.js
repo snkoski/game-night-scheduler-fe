@@ -38,7 +38,7 @@ class LoginForm extends Component {
   render() {
     const { fields } = this.state
     return (
-      <div className="LoginForm">
+      <div className="LoginForm container">
         <form onSubmit={this.handleSubmit}>
           <div className="form-input username-input">
             <input type="text"

@@ -7,6 +7,7 @@ import NavBar from './components/NavBar';
 import UserGames from './components/UserGames';
 import SignupForm from './components/SignupForm';
 import UserHome from './components/UserHome';
+import SyncGamesPage from './components/SyncGamesPage';
 
 class App extends Component {
 constructor(props) {
@@ -101,6 +102,8 @@ constructor(props) {
       return <UserHome user={this.state.auth.currentUser} changePage={this.handlePageChange}/>;
     case 'user-games':
       return <UserGames user={this.state.auth.currentUser} />;
+    case 'sync-games':
+      return <SyncGamesPage user={this.state.auth.currentUser} />;
     default:
       return <h1>404 404 404 404</h1>
     }

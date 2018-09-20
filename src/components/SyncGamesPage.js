@@ -32,8 +32,8 @@ export default class SyncGamesPage extends Component {
     }
     fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}/sync`, options)
       .then(resp => resp.json())
-      .then(console.log)
-      // If login works do this
+      .then(() => this.props.showWelcome())
+
   }
   render() {
     return (

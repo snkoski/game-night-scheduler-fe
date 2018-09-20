@@ -103,7 +103,7 @@ constructor(props) {
     case 'user-games':
       return <UserGames user={this.state.auth.currentUser} />;
     case 'sync-games':
-      return <SyncGamesPage user={this.state.auth.currentUser} />;
+      return <SyncGamesPage user={this.state.auth.currentUser} showWelcome={this.showWelcome}/>;
     default:
       return <h1>404 404 404 404</h1>
     }

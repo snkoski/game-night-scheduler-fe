@@ -23,7 +23,7 @@ export default class GameCard extends Component {
     if (this.state.short_description) {
       return (<div>
         {this.props.game.description.substr(0, 200)}...
-        <br/>
+        {/* <br/> */}
         <a className="game-description" onClick={() => this.setState({short_description: !this.state.short_description})}>Show full description</a>
       </div>)
     }
@@ -36,16 +36,18 @@ export default class GameCard extends Component {
 
   renderGameCard() {
     if (this.state.clicked === true) {
-    return (<List.Item >
-      <List.Content onClick={this.onGameClick}>
-        <List.Header>
+    return (<List.Item>
+      <List.Content>
+        <List.Header onClick={this.onGameClick}>
           {this.props.game.name}
+          <br/>
+          <img src={this.props.game.thumbnail} />
         </List.Header>
-        <img src={this.props.game.thumbnail} />
+        <p><a target="_blank" href={`https://boardgamegeek.com/boardgame/${this.props.game.bgg_id}`}>See game on BGG</a></p>
         <p>Player Count - Min: {this.props.game.min_players} Max: {this.props.game.max_players}</p>
         <p>Play Time - {this.props.game.play_time} minutes</p>
-
       </List.Content>
+      <br/>
       <List.Content>
         {this.render_description()}
       </List.Content>

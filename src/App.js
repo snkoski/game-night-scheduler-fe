@@ -4,15 +4,17 @@ import './App.css';
 import Welcome from './components/Welcome';
 import LoginForm from './components/LoginForm';
 import NavBar from './components/NavBar';
-import UserGames from './components/UserGames';
+import UserGames from './components/gameComponents/UserGames';
 import SignupForm from './components/SignupForm';
 import UserHome from './components/UserHome';
-import SyncGamesPage from './components/SyncGamesPage';
+import SyncGamesPage from './components/gameComponents/SyncGamesPage';
+import LoadingIndicator from './components/LoadingIndicator';
 
 class App extends Component {
 constructor(props) {
   super(props);
   this.state = {
+    isLoading: true,
     activeItem: 'welcome',
     auth: {
       currentUser: {}
@@ -20,31 +22,43 @@ constructor(props) {
   };
   this.renderContent = this.renderContent.bind(this);
   this.handlePageChange = this.handlePageChange.bind(this);
+  this.handleNavBarClick = this.handleNavBarClick.bind(this);
+  this.showWelcome = this.showWelcome.bind(this);
+  this.handleLogout = this.handleLogout.bind(this);
+  this.handleLogin = this.handleLogin.bind(this);
+
 }
 
 
   componentDidMount() {
-      const token = localStorage.getItem('token')
-      if (token) {
-        const options = {
-          headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-            'Authorization': token
-          }
+    this._timer = setTimeout(() => this.setState({ isLoading: false }), 2000
+  );
+
+    const token = localStorage.getItem('token')
+    if (token) {
+      const options = {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': token
         }
-      fetch('http://localhost:3000/api/v1/reauth', options)
-        .then(resp => resp.json())
-        .then(user => { this.setState({
-          auth: {
-            currentUser: user
-          }
-        })
+      }
+    fetch('http://localhost:3000/api/v1/reauth', options)
+      .then(resp => resp.json())
+      .then(user => { this.setState({
+        auth: {
+          currentUser: user
+        }
+      })
       })
     }
   }
 
-  handleLogin = (user) => {
+  componentWillUnmount() {
+    clearTimeout(this._timer);
+  }
+
+  handleLogin(user) {
     this.setState({
       auth: {
         currentUser: user
@@ -55,7 +69,7 @@ constructor(props) {
     });
   };
 
-  handleLogout = () => {
+  handleLogout() {
     this.setState({
       activeItem: 'welcome',
       auth: {
@@ -66,7 +80,7 @@ constructor(props) {
     })
   }
 
-  showWelcome = () => {
+  showWelcome() {
     if(!!this.state.auth.currentUser.id) {
       this.setState({
         activeItem: 'user-home'
@@ -74,7 +88,7 @@ constructor(props) {
     }
   }
 
-  handleNavBarClick = (e) => {
+  handleNavBarClick(e) {
     this.setState({
       activeItem: e.target.id
     })
@@ -121,7 +135,10 @@ constructor(props) {
           onLogout={this.handleLogout}
         />
         {this.renderContent()}
-
+        <pre>isLoading: {String(this.state.isLoading)}</pre>
+        <LoadingIndicator isLoading={this.state.isLoading}>
+          <div>ahoy!</div>
+        </LoadingIndicator>
       </div>
     );
   }

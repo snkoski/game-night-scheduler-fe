@@ -31,12 +31,7 @@ export default class UserGames extends Component {
       return(
         <div className="UserGames container segment ui">
           <h3>You have {this.state.games.length} games</h3>
-          {/* <List selection verticalAlign="middle">
-            {this.state.games ? this.state.games.map((game) => {
-              return <GameCard key={game.bgg_id} game={game} />
-            }) : null
-            }
-          </List> */}
+          
           <List selection verticalAlign="middle">
             {this.state.games ? searched_games.map((game) => {
               return <GameCard key={game.bgg_id} game={game} />

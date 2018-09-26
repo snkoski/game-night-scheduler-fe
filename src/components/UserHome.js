@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
-import UserGames from './UserGames';
+import UserGames from './gameComponents/UserGames';
 import SearchBar from './SearchBar';
 
 export default class UserHome extends Component {

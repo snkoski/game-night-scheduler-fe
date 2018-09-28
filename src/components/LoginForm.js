@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 class LoginForm extends Component {
   state = {
+    // loggedIn: false,
     fields: {
       username: '',
       password: ''
     }
+
   };
 
   handleChange = (e) => {
@@ -31,12 +34,18 @@ class LoginForm extends Component {
       .then(user => {
         this.props.onLogin(user)
       })
-      // If login works do this
-      .then(() => this.props.showWelcome())
+      // .then(() => this.setState(() => ({
+      //   loggedIn: true
+      // })))
   };
 
   render() {
+    // if (this.state.loggedIn === true) {
+    //   return <Redirect to="/home" />
+    // }
+
     const { fields } = this.state
+
     return (
       <div className="LoginForm container">
         <form onSubmit={this.handleSubmit}>

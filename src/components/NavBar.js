@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Icon } from 'semantic-ui-react';
+import { NavLink } from 'react-router-dom';
 
 
 
@@ -10,6 +11,38 @@ export default class NavBar extends Component {
 
     }
     this.renderNavBar = this.renderNavBar.bind(this);
+    this.renderNavBar2 = this.renderNavBar2.bind(this);
+  }
+
+
+  renderNavBar2() {
+    const loggedIn = !!this.props.currentUser.id
+    if (loggedIn) {
+      return <React.Fragment>
+        <Menu.Item as={NavLink} to="/home" name="home">
+          <Icon name="home" size="large" />
+          <p>Home</p>
+        </Menu.Item>
+        <Menu.Item
+          onClick={this.props.onLogout}
+        >
+          Log Out
+        </Menu.Item>
+      </React.Fragment>
+    }
+
+    return (
+      <React.Fragment>
+        <Menu.Item as={NavLink} to="/login" name="login">
+          <Icon name="home" size="large" />
+          <p>Login</p>
+        </Menu.Item>
+        <Menu.Item as={NavLink} to="/signup" name="signup">
+
+          <p>Sign Up</p>
+        </Menu.Item>
+      </React.Fragment>
+    )
   }
 
   renderNavBar() {
@@ -50,6 +83,11 @@ export default class NavBar extends Component {
         >
           Log In
         </Menu.Item>
+        <Menu.Item
+          onClick={this.props.onLogout}
+        >
+          Log Out
+        </Menu.Item>
       </React.Fragment>
     )
   }
@@ -57,9 +95,11 @@ export default class NavBar extends Component {
   render() {
     console.log(this.props);
     return (
-      <Menu className="NavBar" fixed="top">
-        {this.renderNavBar()}
-      </Menu>
+
+        <Menu className="NavBar" fixed="top">
+          {this.renderNavBar()}
+        </Menu>
+
     )
   }
 }

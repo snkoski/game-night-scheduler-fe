@@ -11,8 +11,6 @@ export default class SyncGamesPage extends Component {
     this.syncGames = this.syncGames.bind(this);
   }
 
-
-
   handleInputChange(e) {
     this.setState({
       bgg_username: e.target.value
@@ -32,9 +30,10 @@ export default class SyncGamesPage extends Component {
     }
     fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}/sync`, options)
       .then(resp => resp.json())
-      .then(() => this.props.showWelcome())
+      .then(() => this.props.goHome())
 
   }
+  
   render() {
     return (
       <div className="SyncGamesPage container">

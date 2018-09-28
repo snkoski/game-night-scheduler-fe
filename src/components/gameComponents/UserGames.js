@@ -7,38 +7,24 @@ export default class UserGames extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      games: []
     };
-}
-    componentDidMount() {
-      fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}/games`)
-        .then(resp => resp.json())
-        .then(games => {this.setState({
-          games: games.sort(function(a,b){
-          return a.name.localeCompare(b.name);
-      })
-        })
-      })
-    }
-
-
-
-    render() {
-      let searched_games = this.state.games.filter((game) => {
-        return game.name.toLowerCase().includes(this.props.gameSearch.toLowerCase())
-      })
-      console.log(this.state.games.length);
-      return(
-        <div className="UserGames container segment ui">
-          <h3>You have {this.state.games.length} games</h3>
-          
-          <List selection verticalAlign="middle">
-            {this.state.games ? searched_games.map((game) => {
-              return <GameCard key={game.bgg_id} game={game} />
-            }) : null
-            }
-          </List>
-        </div>
-      )
-    }
   }
+
+  render() {
+    let searched_games = this.props.games.filter((game) => {
+      return game.name.toLowerCase().includes(this.props.gameSearch.toLowerCase())
+    })
+    console.log(this.props.games.length);
+    return(
+      <div className="UserGames container segment ui">
+        <h3>You have {this.props.games.length} games</h3>
+        <List selection verticalAlign="middle">
+          {this.props.games ? searched_games.map((game) => {
+            return <GameCard key={game.bgg_id} game={game} />
+          }) : null
+          }
+        </List>
+      </div>
+    )
+  }
+}

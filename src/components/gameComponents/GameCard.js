@@ -21,7 +21,6 @@ export default class GameCard extends Component {
     })
   }
 
-
   renderGameCard() {
     if (this.state.clicked === true) {
     return (

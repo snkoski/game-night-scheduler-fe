@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'semantic-ui-react';
 
 
 export default class GroupCard extends Component {
@@ -36,6 +37,8 @@ export default class GroupCard extends Component {
       })
   }
 
+
+
   render() {
     const member = this.state.users.filter((user) => {
       return user.id === this.props.user.id
@@ -47,6 +50,7 @@ export default class GroupCard extends Component {
         <p>Number of members: {this.props.group.number_of_members}</p>
         <p>Meeting day: {this.props.group.regular_meeting_day ? this.props.group.regular_meeting_day : 'TBA'}</p>
         {!member ? <p className="link" onClick={this.joinGroup}>Join Group</p> : null }
+        {this.props.getCurrentGroup ? <Button onClick={() => this.props.getCurrentGroup(this.props.group)}>See Group </Button> : null}
       </ul>
     )
   }
@@ -55,5 +59,6 @@ export default class GroupCard extends Component {
 GroupCard.propTypes = {
   user: PropTypes.object.isRequired,
   group: PropTypes.object.isRequired,
-  addGroup: PropTypes.func
+  addGroup: PropTypes.func,
+  getCurrentGroup: PropTypes.func
 }

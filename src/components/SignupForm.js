@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Button, Form } from 'semantic-ui-react';
-import { Redirect } from 'react-router-dom';
 
 export default class SignupForm extends Component {
   constructor(props) {
@@ -42,16 +42,9 @@ export default class SignupForm extends Component {
         .then(user => {
           this.props.onLogin(user);
         })
-        // .then(() => this.setState(() => ({
-        //   signedUp: true
-        // })))
   }
 
   render() {
-    // if (this.state.signedUp === true) {
-    // return <Redirect to="/home" />
-    // }
-
     return (
       <Form className="SignupForm container" onSubmit={this.handleSubmit}>
         <h1>SIGN UP</h1>
@@ -86,4 +79,8 @@ export default class SignupForm extends Component {
       </Form>
     )
   }
+}
+
+SignupForm.propTypes = {
+  onLogin: PropTypes.func.isRequired
 }

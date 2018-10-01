@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Redirect } from 'react-router-dom';
 
-class LoginForm extends Component {
+export default class LoginForm extends Component {
   state = {
-    // loggedIn: false,
     fields: {
       username: '',
       password: ''
@@ -34,16 +32,9 @@ class LoginForm extends Component {
       .then(user => {
         this.props.onLogin(user)
       })
-      // .then(() => this.setState(() => ({
-      //   loggedIn: true
-      // })))
   };
 
   render() {
-    // if (this.state.loggedIn === true) {
-    //   return <Redirect to="/home" />
-    // }
-
     const { fields } = this.state
 
     return (
@@ -75,4 +66,7 @@ class LoginForm extends Component {
   }
 }
 
-export default LoginForm;
+LoginForm.propTypes = {
+  onLogin: PropTypes.func.isRequired,
+  onNavBarClick: PropTypes.func.isRequired
+}

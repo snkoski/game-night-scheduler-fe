@@ -84,9 +84,10 @@ export default class NavBar extends Component {
           Log In
         </Menu.Item>
         <Menu.Item
-          onClick={this.props.onLogout}
+          id="signup"
+          onClick={this.props.onNavBarClick}
         >
-          Log Out
+          Sign Up
         </Menu.Item>
       </React.Fragment>
     )

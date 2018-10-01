@@ -3,8 +3,6 @@ import { Grid, Button } from 'semantic-ui-react';
 import UserGames from './gameComponents/UserGames';
 import SearchBar from './SearchBar';
 import GroupList from './groupComponents/GroupList';
-import GroupPage from './groupComponents/GroupPage';
-
 
 export default class UserHome extends Component {
   constructor(props) {
@@ -73,6 +71,8 @@ export default class UserHome extends Component {
     })
   }
 
+
+
   renderGroups() {
     if (this.state.groupsToogle) {
       return (
@@ -84,7 +84,10 @@ export default class UserHome extends Component {
             </Button>
             <br/>
             Your Groups
-            <GroupList user={this.props.user} groups={this.state.userGroups} />
+            <GroupList user={this.props.user}
+              groups={this.state.userGroups}
+              getCurrentGroup={this.props.getCurrentGroup}
+            />
           </Grid.Column>
         </React.Fragment>
       )
@@ -96,7 +99,10 @@ export default class UserHome extends Component {
         </Button>
         <br/>
         All Groups
-        <GroupList user={this.props.user} groups={this.state.allGroups} addGroup={this.addUserToGroup} />
+        <GroupList user={this.props.user}
+          groups={this.state.allGroups}
+          addGroup={this.addUserToGroup}
+        />
       </Grid.Column>
     )
   }
@@ -108,7 +114,10 @@ export default class UserHome extends Component {
           <Grid.Row>
             <Grid.Column width={8}>
               <SearchBar handleSearch={this.handleSearch} search={this.state.search}/>
-              <UserGames user={this.props.user} gameSearch={this.state.search} games={this.state.userGames}/>
+              <UserGames user={this.props.user}
+                gameSearch={this.state.search}
+                games={this.state.userGames}
+              />
             </Grid.Column>
             <Grid.Column width={4}>
               GAME NIGHTS

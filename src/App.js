@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
 import './App.css';
-import {Switch, Route} from 'react-router-dom';
+// import {Switch, Route} from 'react-router-dom';
 
 import Welcome from './components/Welcome';
 import LoginForm from './components/LoginForm';
 import NavBar from './components/NavBar';
-import UserGames from './components/gameComponents/UserGames';
 import SignupForm from './components/SignupForm';
 import UserHome from './components/UserHome';
 import SyncGamesPage from './components/gameComponents/SyncGamesPage';
 import LoadingIndicator from './components/LoadingIndicator';
+import GroupPage from './components/groupComponents/GroupPage';
 
 class App extends Component {
 constructor(props) {
   super(props);
   this.state = {
-    loggedIn: false,
     isLoading: true,
     userGames: [],
+    currentGroup: {},
     activeItem: 'welcome',
     auth: {
       currentUser: {}
@@ -29,13 +29,11 @@ constructor(props) {
   this.handleLogout = this.handleLogout.bind(this);
   this.handleLogin = this.handleLogin.bind(this);
   this.goToUserHome = this.goToUserHome.bind(this);
+  this.getCurrentGroup = this.getCurrentGroup.bind(this);
 }
 
-
   componentDidMount() {
-
     this._timer = setTimeout(() => this.setState({ isLoading: false }), 2000
-
   );
 
     const token = localStorage.getItem('token')
@@ -73,8 +71,6 @@ constructor(props) {
     });
   };
 
-
-
   handleLogout() {
     this.setState({
       activeItem: 'welcome',
@@ -92,15 +88,16 @@ constructor(props) {
         })
   }
 
-  // handleNavBarClick(e) {
-  //   this.setState({
-  //     activeItem: e.target.id
-  //   })
-  // }
-
   handlePageChange(e) {
     this.setState({
       activeItem: e.target.id
+    })
+  }
+
+  getCurrentGroup(e) {
+    this.setState({
+      currentGroup: e,
+      activeItem: 'group-page'
     })
   }
 
@@ -109,7 +106,9 @@ constructor(props) {
     case 'welcome':
       return <Welcome />;
     case 'login':
-      return <LoginForm onLogin={this.handleLogin} onNavBarClick={this.handlePageChange}
+      return <LoginForm
+        onLogin={this.handleLogin}
+        onNavBarClick={this.handlePageChange}
              />;
     case 'signup':
       return <SignupForm
@@ -117,18 +116,28 @@ constructor(props) {
         onLogin={this.handleLogin}
              />;
     case 'user-home':
-      return <UserHome user={this.state.auth.currentUser} changePage={this.handlePageChange} />;
-    // case 'user-games':
-    //   return <UserGames user={this.state.auth.currentUser} />;
+      return <UserHome
+        user={this.state.auth.currentUser}
+        changePage={this.handlePageChange}
+        getCurrentGroup={this.getCurrentGroup}
+             />;
     case 'sync-games':
-      return <SyncGamesPage user={this.state.auth.currentUser} goHome={this.goToUserHome}/>;
+      return <SyncGamesPage
+        user={this.state.auth.currentUser}
+        goHome={this.goToUserHome}
+             />;
+    case 'group-page':
+      return <GroupPage
+        user={this.state.auth.currentUser}
+        group={this.state.currentGroup}
+             />
     default:
       return <h1>404 404 404 404</h1>
     }
   }
 
   render() {
-    const loggedIn = !!this.state.auth.currentUser.id;
+    // const loggedIn = !!this.state.auth.currentUser.id;
 
     return (
       <div className="App">

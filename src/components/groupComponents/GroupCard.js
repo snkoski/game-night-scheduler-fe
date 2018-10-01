@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+
 export default class GroupCard extends Component {
   constructor(props) {
     super(props);
@@ -45,7 +46,7 @@ export default class GroupCard extends Component {
         <h3>{this.props.group.name}</h3>
         <p>Number of members: {this.props.group.number_of_members}</p>
         <p>Meeting day: {this.props.group.regular_meeting_day ? this.props.group.regular_meeting_day : 'TBA'}</p>
-        {!member ? <p onClick={this.joinGroup}>Join Group</p> : null }
+        {!member ? <p className="link" onClick={this.joinGroup}>Join Group</p> : null }
       </ul>
     )
   }

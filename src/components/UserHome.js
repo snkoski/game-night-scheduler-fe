@@ -3,6 +3,7 @@ import { Grid, Button } from 'semantic-ui-react';
 import UserGames from './gameComponents/UserGames';
 import SearchBar from './SearchBar';
 import GroupList from './groupComponents/GroupList';
+import GroupPage from './groupComponents/GroupPage';
 
 
 export default class UserHome extends Component {

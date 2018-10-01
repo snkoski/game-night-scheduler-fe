@@ -118,8 +118,8 @@ constructor(props) {
              />;
     case 'user-home':
       return <UserHome user={this.state.auth.currentUser} changePage={this.handlePageChange} />;
-    case 'user-games':
-      return <UserGames user={this.state.auth.currentUser} />;
+    // case 'user-games':
+    //   return <UserGames user={this.state.auth.currentUser} />;
     case 'sync-games':
       return <SyncGamesPage user={this.state.auth.currentUser} goHome={this.goToUserHome}/>;
     default:

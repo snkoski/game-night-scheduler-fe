@@ -49,7 +49,8 @@ export default class GroupCard extends Component {
         <h3>{this.props.group.name}</h3>
         <p>Number of members: {this.props.group.number_of_members}</p>
         <p>Meeting day: {this.props.group.regular_meeting_day ? this.props.group.regular_meeting_day : 'TBA'}</p>
-        {!member ? <p className="link" onClick={this.joinGroup}>Join Group</p> : null }
+        {!member ? <Button className="link" onClick={this.joinGroup}>Join Group</Button> : null }
+
         {this.props.getCurrentGroup ? <Button onClick={() => this.props.getCurrentGroup(this.props.group)}>See Group </Button> : null}
       </ul>
     )

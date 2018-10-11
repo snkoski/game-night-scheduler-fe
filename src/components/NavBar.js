@@ -68,6 +68,12 @@ export default class NavBar extends Component {
           >
             Sync Games
           </Menu.Item>
+          <Menu.Item
+            id="new-event"
+            onClick={this.props.onNavBarClick}
+          >
+            Create New Event
+          </Menu.Item>
         </React.Fragment>
       )
     }

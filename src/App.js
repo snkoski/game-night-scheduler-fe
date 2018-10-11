@@ -10,6 +10,7 @@ import UserHome from './components/UserHome';
 import SyncGamesPage from './components/gameComponents/SyncGamesPage';
 import LoadingIndicator from './components/LoadingIndicator';
 import GroupPage from './components/groupComponents/GroupPage';
+import NewEventForm from './components/eventComponents/NewEventForm';
 
 class App extends Component {
 constructor(props) {
@@ -130,7 +131,12 @@ constructor(props) {
       return <GroupPage
         user={this.state.auth.currentUser}
         group={this.state.currentGroup}
-             />
+             />;
+    case 'new-event':
+      return <NewEventForm
+        user={this.state.auth.currentUser}
+        goHome={this.goToUserHome}
+             />;
     default:
       return <h1>404 404 404 404</h1>
     }

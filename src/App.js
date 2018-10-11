@@ -31,6 +31,7 @@ constructor(props) {
   this.handleLogin = this.handleLogin.bind(this);
   this.goToUserHome = this.goToUserHome.bind(this);
   this.getCurrentGroup = this.getCurrentGroup.bind(this);
+  this.makeNewEvent = this.makeNewEvent.bind(this);
 }
 
   componentDidMount() {
@@ -102,6 +103,12 @@ constructor(props) {
     })
   }
 
+  makeNewEvent() {
+    this.setState({
+      activeItem: 'new-event'
+    })
+  }
+
   renderContent() {
     switch (this.state.activeItem) {
     case 'welcome':
@@ -131,11 +138,14 @@ constructor(props) {
       return <GroupPage
         user={this.state.auth.currentUser}
         group={this.state.currentGroup}
+        newEvent={this.makeNewEvent}
+
              />;
     case 'new-event':
       return <NewEventForm
         user={this.state.auth.currentUser}
         goHome={this.goToUserHome}
+        group={this.state.currentGroup}
              />;
     default:
       return <h1>404 404 404 404</h1>

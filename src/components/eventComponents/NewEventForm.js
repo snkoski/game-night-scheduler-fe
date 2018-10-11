@@ -9,7 +9,8 @@ export default class NewEventForm extends Component {
         name: `${this.props.user.username}'s Game Night`,
         time: '',
         date: '',
-        created_by: this.props.user.id
+        created_by: this.props.user.id,
+        group_id: this.props.group.id
       }
     }
     this.handleChange = this.handleChange.bind(this);

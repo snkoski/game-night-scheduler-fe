@@ -24,14 +24,17 @@ export default class GroupPage extends Component {
   renderMembers() {
     if (this.state.members.length > 0) {
       return (
-        <ul>
-          {this.state.members.map((member) => {
-            return <li key={member.id} onClick={this.toggleShowGames}>
-              {member.username} - {member.email}
-              {/* {this.showMemberGames()} */}
-            </li>
-          })}
-        </ul>
+        <div>
+          <ul>
+            {this.state.members.map((member) => {
+              return <li key={member.id} onClick={this.toggleShowGames}>
+                {member.username} - {member.email}
+                {/* {this.showMemberGames()} */}
+              </li>
+            })}
+          </ul>
+          <button type="button" onClick={this.props.newEvent}>Submit</button>
+        </div>
       )
     }
     return (

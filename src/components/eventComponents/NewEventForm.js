@@ -6,7 +6,7 @@ export default class NewEventForm extends Component {
     super(props);
     this.state = {
       fields: {
-        name: `${this.props.user.username}'s Game Night`,
+        name: `${this.props.user.username}'s ${this.props.group.name} Game Night`,
         time: '',
         date: '',
         created_by: this.props.user.id,
@@ -34,7 +34,7 @@ export default class NewEventForm extends Component {
       },
       body: JSON.stringify(this.state.fields)
     }
-    fetch("http://localhost:3000/api/v1/events", options)
+    fetch(`http://localhost:3000/api/v1/groups/${this.props.group.id}/events`, options)
     .then(resp => resp.json())
     .then(() => this.props.goHome())
   }

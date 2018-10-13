@@ -70,10 +70,13 @@ export default class EventCard extends Component {
     return (
       <div className="EventCard">
         <p>{this.props.event.name}</p>
+        <p>Location: {this.props.event.location}</p>
         <p>{this.formatDate(this.props.event.date)}</p>
         <p>{this.formatTime(this.props.event.time)}</p>
+        <p>Max Players: {this.props.event.max_users}</p>
         <p>Created By: {this.props.member.username}</p>
-        {this.state.joinedEvent ? <p>You're Going</p> : <button type="button" onClick={this.joinEvent}>Join Event</button>}
+
+        {this.state.joinedEvent ? <p>You're Going</p> : this.props.event.current_users >= this.props.event.max_users ? <p>Event Is Full</p> : <button type="button" onClick={this.joinEvent}>Join Event</button>}
         <br/>
 
         <button type="button" onClick={this.showMembers}>{this.state.showMembers ? "Hide Members" : "Show Members" }</button>

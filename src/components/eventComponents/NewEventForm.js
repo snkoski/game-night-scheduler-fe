@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import * as moment from 'moment';
 
 export default class NewEventForm extends Component {
   constructor(props) {
@@ -9,6 +10,8 @@ export default class NewEventForm extends Component {
         name: `${this.props.user.username}'s ${this.props.group.name} Game Night`,
         time: '',
         date: '',
+        location: '',
+        max_users: '',
         created_by: this.props.user.id,
         group_id: this.props.group.id
       }
@@ -42,6 +45,7 @@ export default class NewEventForm extends Component {
 
   render() {
     const { fields } = this.state
+    let today = moment().format("YYYY-MM-DD")
 
     return (
       <div className="NewEventForm container">
@@ -49,9 +53,26 @@ export default class NewEventForm extends Component {
           <div>
             <input type="text"
               name="name"
-              // placeholder="Event Name"
               value={fields.name}
               onChange={this.handleChange}
+            />
+          </div>
+          <div>
+            <input type="text"
+              name="location"
+              placeholder="Location"
+              value={fields.location}
+              onChange={this.handleChange}
+              required
+            />
+          </div>
+          <div>
+            <input type="number"
+              name="max_users"
+              placeholder="Max Players"
+              value={fields.max_users}
+              onChange={this.handleChange}
+              required
             />
           </div>
           <div>
@@ -69,6 +90,7 @@ export default class NewEventForm extends Component {
               placeholder="Date"
               value={fields.date}
               onChange={this.handleChange}
+              min={today}
               required
             />
           </div>

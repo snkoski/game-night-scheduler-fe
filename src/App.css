@@ -43,6 +43,12 @@ ul {
 .header {
   font-size: 15px;
 }
- .link {
-   cursor: pointer;
- }
+
+.link {
+  cursor: pointer;
+}
+
+.EventCard {
+  border: solid 5px black;
+  margin: 2px;
+}

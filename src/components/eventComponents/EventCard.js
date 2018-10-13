@@ -63,22 +63,26 @@ export default class EventCard extends Component {
     })
   }
 
+
+
   render() {
 
     return (
-      <div>
+      <div className="EventCard">
         <p>{this.props.event.name}</p>
         <p>{this.formatDate(this.props.event.date)}</p>
         <p>{this.formatTime(this.props.event.time)}</p>
         <p>Created By: {this.props.member.username}</p>
         {this.state.joinedEvent ? <p>You're Going</p> : <button type="button" onClick={this.joinEvent}>Join Event</button>}
         <br/>
+
         <button type="button" onClick={this.showMembers}>{this.state.showMembers ? "Hide Members" : "Show Members" }</button>
 
         {this.state.showMembers ? <ul>{this.state.members.map((member) => {
           return <li key={member.id}>{member.username}</li>
         })}</ul> : null}
 
+        {this.props.event.created_by === this.props.user.id && <button type="button" onClick={() => this.props.cancelEvent(this.props.event.id)}>Cancel Event</button>}
       </div>
     )
   }
@@ -87,5 +91,6 @@ export default class EventCard extends Component {
 EventCard.propTypes = {
   event: PropTypes.object.isRequired,
   member: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  cancelEvent: PropTypes.func.isRequired
 }

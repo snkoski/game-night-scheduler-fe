@@ -15,7 +15,7 @@ export default class NewEventForm extends Component {
     }
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.joinEvent = this.joinEvent.bind(this);
+    // this.joinEvent = this.joinEvent.bind(this);
   }
 
   handleChange(e) {

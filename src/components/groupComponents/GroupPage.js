@@ -14,6 +14,7 @@ export default class GroupPage extends Component {
     this.renderMembers = this.renderMembers.bind(this);
     this.fetchGroupMembers = this.fetchGroupMembers.bind(this);
     this.fetchGroupEvents = this.fetchGroupEvents.bind(this);
+    this.cancelEvent = this.cancelEvent.bind(this);
     // this.showMemberGames = this.showMemberGames.bind(this);
     // this.toggleShowGames = this.toggleShowGames.bind(this);
   }
@@ -39,11 +40,24 @@ export default class GroupPage extends Component {
     }))
   }
 
+  cancelEvent(id) {
+    console.log("CANCEL EVENT");
+    const newEvents = this.state.events.filter((event) => {
+      return event.id !== id
+    })
+    fetch(`http://localhost:3000/api/v1/events/${id}`, {method: 'DELETE'})
+    .then(this.setState({
+      events: newEvents
+    }))
+
+  }
+
   renderMembers() {
+    // debugger
     if (this.state.members.length > 0) {
       return (
         <div>
-          <EventList events={this.state.events} members={this.state.members} user={this.props.user}/>
+          <EventList events={this.state.events} members={this.state.members} user={this.props.user} cancelEvent={this.cancelEvent}/>
           <ul>
             {this.state.members.map((member) => {
               return <li key={member.id} onClick={this.toggleShowGames}>

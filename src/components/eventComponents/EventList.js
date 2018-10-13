@@ -15,7 +15,7 @@ export default class EventList extends Component {
     return (
       <div>
         {this.props.events.map((event) => {
-          return <EventCard key={event.id} event={event} member={this.props.members.find((member) => member.id === event.created_by)} user={this.props.user}/>
+          return <EventCard key={event.id} event={event} member={this.props.members.find((member) => member.id === event.created_by)} user={this.props.user} cancelEvent={this.props.cancelEvent}/>
         })}
       </div>
     )
@@ -25,5 +25,6 @@ export default class EventList extends Component {
 EventList.propTypes = {
   events: PropTypes.array,
   members: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  cancelEvent: PropTypes.func.isRequired
 }

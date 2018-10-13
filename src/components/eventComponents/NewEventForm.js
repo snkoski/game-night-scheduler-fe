@@ -12,6 +12,7 @@ export default class NewEventForm extends Component {
         date: '',
         location: '',
         max_users: '',
+        description: '',
         created_by: this.props.user.id,
         group_id: this.props.group.id
       }
@@ -94,6 +95,14 @@ export default class NewEventForm extends Component {
               required
             />
           </div>
+          <textarea
+            rows="10"
+            cols="70"
+            name="description"
+            placeholder="Event Description"
+            value={fields.description}
+            onChange={this.handleChange}
+          />
           <div>
             <button type="submit">Submit</button>
           </div>

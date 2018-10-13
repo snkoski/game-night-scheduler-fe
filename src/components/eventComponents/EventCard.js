@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import * as moment from 'moment';
+import { Route, Link } from 'react-router-dom';
+import AddGamesToVote from '../voteComponents/AddGamesToVote';
 
 export default class EventCard extends Component {
   constructor(props) {
@@ -66,7 +68,7 @@ export default class EventCard extends Component {
 
 
   render() {
-
+    const onGroupPage = this.props.cancelEvent && this.props.event.created_by === this.props.user.id
     return (
       <div className="EventCard">
         <p>{this.props.event.name}</p>
@@ -74,18 +76,30 @@ export default class EventCard extends Component {
         <p>{this.formatDate(this.props.event.date)}</p>
         <p>{this.formatTime(this.props.event.time)}</p>
         <p>Max Players: {this.props.event.max_users}</p>
-        <p>Created By: {this.props.member.username}</p>
+        {this.props.member && <p> Created By: {this.props.member.username}</p>}
+        <p>{this.props.event.description}</p>
 
         {this.state.joinedEvent ? <p>You're Going</p> : this.props.event.current_users >= this.props.event.max_users ? <p>Event Is Full</p> : <button type="button" onClick={this.joinEvent}>Join Event</button>}
         <br/>
-
+        {/* <button type="button">Add games to vote</button> */}
+        <Link to="/add">Add</Link>
+        <button type="button">Vote for games</button>
         <button type="button" onClick={this.showMembers}>{this.state.showMembers ? "Hide Members" : "Show Members" }</button>
 
         {this.state.showMembers ? <ul>{this.state.members.map((member) => {
           return <li key={member.id}>{member.username}</li>
         })}</ul> : null}
 
-        {this.props.event.created_by === this.props.user.id && <button type="button" onClick={() => this.props.cancelEvent(this.props.event.id)}>Cancel Event</button>}
+        {onGroupPage && <button type="button" onClick={() => this.props.cancelEvent(this.props.event.id)}>Cancel Event</button>}
+
+
+        <Route path="/add" render={(() => {
+          return <AddGamesToVote
+            user={this.props.user}
+            event={this.props.event}
+            // games={this.state.userGames}
+                 />
+        })} />
       </div>
     )
   }
@@ -93,7 +107,7 @@ export default class EventCard extends Component {
 
 EventCard.propTypes = {
   event: PropTypes.object.isRequired,
-  member: PropTypes.object.isRequired,
+  member: PropTypes.object,
   user: PropTypes.object.isRequired,
-  cancelEvent: PropTypes.func.isRequired
+  cancelEvent: PropTypes.func
 }

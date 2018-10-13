@@ -23,5 +23,6 @@ export default class GroupList extends Component {
 GroupList.propTypes = {
   user: PropTypes.object.isRequired,
   groups: PropTypes.array.isRequired,
-  addGroup: PropTypes.func
+  addGroup: PropTypes.func,
+  games: PropTypes.array
 }

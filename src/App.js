@@ -11,6 +11,7 @@ import SyncGamesPage from './components/gameComponents/SyncGamesPage';
 import LoadingIndicator from './components/LoadingIndicator';
 import GroupPage from './components/groupComponents/GroupPage';
 import NewEventForm from './components/eventComponents/NewEventForm';
+import AddGamesToVote from './components/voteComponents/AddGamesToVote';
 
 class App extends Component {
 constructor(props) {
@@ -19,6 +20,7 @@ constructor(props) {
     isLoading: true,
     userGames: [],
     currentGroup: {},
+    currentEvent: {},
     activeItem: 'welcome',
     auth: {
       currentUser: {}
@@ -35,6 +37,7 @@ constructor(props) {
 }
 
   componentDidMount() {
+    console.log("APP DID MOUNT");
     this._timer = setTimeout(() => this.setState({ isLoading: false }), 2000
   );
 
@@ -53,6 +56,14 @@ constructor(props) {
         auth: {
           currentUser: user
         }
+      })
+      fetch(`http://localhost:3000/api/v1/users/${user.id}/games`)
+        .then(resp => resp.json())
+        .then(games => {this.setState({
+          userGames: games.sort(function(a,b){
+          return a.name.localeCompare(b.name);
+      })
+        })
       })
       })
     }
@@ -109,6 +120,8 @@ constructor(props) {
     })
   }
 
+  // getCurrentEvent
+
   renderContent() {
     switch (this.state.activeItem) {
     case 'welcome':
@@ -128,6 +141,7 @@ constructor(props) {
         user={this.state.auth.currentUser}
         changePage={this.handlePageChange}
         getCurrentGroup={this.getCurrentGroup}
+        userGames={this.state.userGames}
              />;
     case 'sync-games':
       return <SyncGamesPage
@@ -135,7 +149,7 @@ constructor(props) {
         goHome={this.goToUserHome}
              />;
     case 'group-page':
-    console.log("CURRENT USER: ", this.state.auth.currentUser);
+    console.log("CURRENT GAMES: ", this.state.userGames);
       return <GroupPage
         user={this.state.auth.currentUser}
         group={this.state.currentGroup}
@@ -148,14 +162,21 @@ constructor(props) {
         goHome={this.goToUserHome}
         group={this.state.currentGroup}
              />;
+    case 'add-games-to-vote':
+      return <AddGamesToVote
+        user={this.state.auth.currentUser}
+        event={this.state.currentEvent}
+        games={this.state.userGames}
+             />
     default:
       return <h1>404 404 404 404</h1>
     }
   }
 
   render() {
-    // const loggedIn = !!this.state.auth.currentUser.id;
-
+    const loggedIn = !!this.state.auth.currentUser.id;
+    console.log("LOGGED IN", loggedIn);
+    console.log(this.state.userGames);
     return (
       <div className="App">
         <NavBar
@@ -178,7 +199,10 @@ constructor(props) {
           })} />
           <Route exact path="/" component={Welcome} />
         </Switch> */}
-        {this.renderContent()}
+        {loggedIn ? this.renderContent() : <LoginForm
+          onLogin={this.handleLogin}
+          onNavBarClick={this.handlePageChange}
+                                           />}
         <pre>isLoading: {String(this.state.isLoading)}</pre>
         <LoadingIndicator isLoading={this.state.isLoading}>
           <div>ahoy!</div>

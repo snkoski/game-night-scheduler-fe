@@ -3,6 +3,7 @@ import { Grid, Button } from 'semantic-ui-react';
 import UserGames from './gameComponents/UserGames';
 import SearchBar from './SearchBar';
 import GroupList from './groupComponents/GroupList';
+import UserEventList from './eventComponents/UserEventList';
 
 export default class UserHome extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ export default class UserHome extends Component {
       groupsToogle: true
     }
     this.handleSearch = this.handleSearch.bind(this);
-    this.getUserGames = this.getUserGames.bind(this);
+    // this.getUserGames = this.getUserGames.bind(this);
     this.fetchUserGroups = this.fetchUserGroups.bind(this);
     this.fetchAllGroups = this.fetchAllGroups.bind(this);
     this.addUserToGroup = this.addUserToGroup.bind(this);
@@ -24,21 +25,21 @@ export default class UserHome extends Component {
   }
 
   componentDidMount() {
-    this.getUserGames(this.props.user.id)
+    // this.getUserGames(this.props.user.id)
     this.fetchUserGroups(this.props.user.id)
     this.fetchAllGroups()
   }
 
-  getUserGames(id) {
-    fetch(`http://localhost:3000/api/v1/users/${id}/games`)
-      .then(resp => resp.json())
-      .then(games => {this.setState({
-        userGames: games.sort(function(a,b){
-        return a.name.localeCompare(b.name);
-    })
-      })
-    })
-  }
+  // getUserGames(id) {
+  //   fetch(`http://localhost:3000/api/v1/users/${id}/games`)
+  //     .then(resp => resp.json())
+  //     .then(games => {this.setState({
+  //       userGames: games.sort(function(a,b){
+  //       return a.name.localeCompare(b.name);
+  //   })
+  //     })
+  //   })
+  // }
 
   fetchUserGroups(id) {
     fetch(`http://localhost:3000/api/v1/users/${id}/groups`)
@@ -71,8 +72,6 @@ export default class UserHome extends Component {
     })
   }
 
-
-
   renderGroups() {
     if (this.state.groupsToogle) {
       return (
@@ -87,6 +86,7 @@ export default class UserHome extends Component {
             <GroupList user={this.props.user}
               groups={this.state.userGroups}
               getCurrentGroup={this.props.getCurrentGroup}
+              games={this.state.userGames}
             />
           </Grid.Column>
         </React.Fragment>
@@ -116,11 +116,12 @@ export default class UserHome extends Component {
               <SearchBar handleSearch={this.handleSearch} search={this.state.search}/>
               <UserGames user={this.props.user}
                 gameSearch={this.state.search}
-                games={this.state.userGames}
+                games={this.props.userGames}
               />
             </Grid.Column>
             <Grid.Column width={4}>
               GAME NIGHTS
+              <UserEventList user={this.props.user} />
             </Grid.Column>
             {this.renderGroups()}
           </Grid.Row>

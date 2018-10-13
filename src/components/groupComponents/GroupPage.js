@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import EventList from '../eventComponents/EventList';
 // import UserGames from '../gameComponents/UserGames';
 
@@ -42,7 +43,7 @@ export default class GroupPage extends Component {
     if (this.state.members.length > 0) {
       return (
         <div>
-          <EventList events={this.state.events} members={this.state.members}/>
+          <EventList events={this.state.events} members={this.state.members} user={this.props.user}/>
           <ul>
             {this.state.members.map((member) => {
               return <li key={member.id} onClick={this.toggleShowGames}>
@@ -60,24 +61,6 @@ export default class GroupPage extends Component {
     )
   }
 
-  // toggleShowGames() {
-  //   this.setState((prevState, props) => {
-  //     return { showGames: !prevState.showGames }
-  //   })
-  // }
-  //
-  // showMemberGames() {
-  //   if (this.state.showGames === true) {
-  //     return (
-  //       <UserGames user={this.props.user} /*gameSearch={this.state.search}*/ games={this.state.userGames}/>
-  //     )
-  //   }
-  //   return (
-  //     <h3>no</h3>
-  //   )
-  //
-  // }
-
   render() {
     return (
       <div className="GroupPage container">
@@ -86,4 +69,10 @@ export default class GroupPage extends Component {
       </div>
     )
   }
+}
+
+GroupPage.propTypes = {
+  user: PropTypes.object.isRequired,
+  group: PropTypes.object.isRequired,
+  newEvent: PropTypes.func.isRequired
 }

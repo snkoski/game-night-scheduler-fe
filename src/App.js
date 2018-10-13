@@ -135,6 +135,7 @@ constructor(props) {
         goHome={this.goToUserHome}
              />;
     case 'group-page':
+    console.log("CURRENT USER: ", this.state.auth.currentUser);
       return <GroupPage
         user={this.state.auth.currentUser}
         group={this.state.currentGroup}

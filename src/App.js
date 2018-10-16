@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
-// import {Switch, Route} from 'react-router-dom';
+import {Switch, Route} from 'react-router-dom';
 
 import Welcome from './components/Welcome';
 import LoginForm from './components/LoginForm';
@@ -12,11 +12,14 @@ import LoadingIndicator from './components/LoadingIndicator';
 import GroupPage from './components/groupComponents/GroupPage';
 import NewEventForm from './components/eventComponents/NewEventForm';
 import AddGamesToVote from './components/voteComponents/AddGamesToVote';
+// import ProtectedRoute from './components/ProtectedRoute';
+
 
 class App extends Component {
 constructor(props) {
   super(props);
   this.state = {
+    redirect: false,
     isLoading: true,
     userGames: [],
     currentGroup: {},
@@ -78,10 +81,12 @@ constructor(props) {
       auth: {
         currentUser: user
       },
-      activeItem: 'user-home'
+      activeItem: 'user-home',
+      redirect: true
     }, () => {
       localStorage.setItem('token', user.jwt);
     });
+
   };
 
   handleLogout() {
@@ -126,23 +131,23 @@ constructor(props) {
     switch (this.state.activeItem) {
     case 'welcome':
       return <Welcome />;
-    case 'login':
-      return <LoginForm
-        onLogin={this.handleLogin}
-        onNavBarClick={this.handlePageChange}
-             />;
-    case 'signup':
-      return <SignupForm
-        showWelcome={this.showWelcome}
-        onLogin={this.handleLogin}
-             />;
-    case 'user-home':
-      return <UserHome
-        user={this.state.auth.currentUser}
-        changePage={this.handlePageChange}
-        getCurrentGroup={this.getCurrentGroup}
-        userGames={this.state.userGames}
-             />;
+    // case 'login':
+    //   return <LoginForm
+    //     onLogin={this.handleLogin}
+    //     onNavBarClick={this.handlePageChange}
+    //          />;
+    // case 'signup':
+    //   return <SignupForm
+    //     showWelcome={this.showWelcome}
+    //     onLogin={this.handleLogin}
+    //          />;
+    // case 'user-home':
+    //   return <UserHome
+    //     user={this.state.auth.currentUser}
+    //     changePage={this.handlePageChange}
+    //     getCurrentGroup={this.getCurrentGroup}
+    //     userGames={this.state.userGames}
+    //          />;
     case 'sync-games':
       return <SyncGamesPage
         user={this.state.auth.currentUser}
@@ -175,8 +180,8 @@ constructor(props) {
 
   render() {
     const loggedIn = !!this.state.auth.currentUser.id;
-    console.log("LOGGED IN", loggedIn);
-    console.log(this.state.userGames);
+    // console.log("LOGGED IN", loggedIn);
+    // console.log(this.state.userGames);
     return (
       <div className="App">
         <NavBar
@@ -185,27 +190,51 @@ constructor(props) {
           onNavBarClick={this.handlePageChange}
           onLogout={this.handleLogout}
         />
-        {/* <Switch>
+        { <Switch>
+          {/* <ProtectedRoute path="/welcome" loggedIn={loggedIn} component={Welcome} />
+            <ProtectedRoute path="/home" loggedIn={loggedIn} render={(() => {
+            return <UserHome
+              user={this.state.auth.currentUser}
+              changePage={this.handlePageChange}
+              getCurrentGroup={this.getCurrentGroup}
+              userGames={this.state.userGames}
+            />
+
+
+          })} /> */}
+          <Route path="/welcome" component={Welcome} />
           <Route path="/home" render={(() => {
-            return <UserHome user={this.state.auth.currentUser} loggedIn={loggedIn} />
+            return <UserHome
+              user={this.state.auth.currentUser}
+              changePage={this.handlePageChange}
+              getCurrentGroup={this.getCurrentGroup}
+              userGames={this.state.userGames}
+                   />
+
+
           })} />
           <Route path="/login" render={(() => {
-            return <LoginForm onLogin={this.handleLogin} />
+            return <LoginForm
+              onLogin={this.handleLogin}
+              onNavBarClick={this.handlePageChange}
+              redirect={this.state.redirect}
+                   />
           })} />
           <Route path="/signup" render={(() => {
             return <SignupForm
-          onLogin={this.handleLogin}
-          />
+              showWelcome={this.showWelcome}
+              onLogin={this.handleLogin}
+                   />
           })} />
           <Route exact path="/" component={Welcome} />
-        </Switch> */}
-        {loggedIn ? this.renderContent() : <LoginForm
+        </Switch> }
+        {/* {loggedIn ? this.renderContent() : <LoginForm
           onLogin={this.handleLogin}
           onNavBarClick={this.handlePageChange}
-                                           />}
+        />} */}
         <pre>isLoading: {String(this.state.isLoading)}</pre>
         <LoadingIndicator isLoading={this.state.isLoading}>
-          <div>ahoy!</div>
+          <div>{this.state.auth.currentUser.id}</div>
         </LoadingIndicator>
       </div>
     );

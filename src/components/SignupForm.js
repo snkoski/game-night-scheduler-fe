@@ -45,9 +45,10 @@ export default class SignupForm extends Component {
   }
 
   render() {
+    console.log("SIGNUP PROPS", this.props);
     return (
       <Form className="SignupForm container" onSubmit={this.handleSubmit}>
-        <h1>SIGN UP</h1>
+        <h1>SIGN UP {this.props.test}</h1>
         <Form.Field>
           <label>Username</label>
           <input type="text"

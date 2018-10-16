@@ -4,6 +4,7 @@ import UserGames from './gameComponents/UserGames';
 import SearchBar from './SearchBar';
 import GroupList from './groupComponents/GroupList';
 import UserEventList from './eventComponents/UserEventList';
+import GamesContainer from './gameComponents/GamesContainer';
 
 export default class UserHome extends Component {
   constructor(props) {
@@ -16,7 +17,7 @@ export default class UserHome extends Component {
       groupsToogle: true
     }
     this.handleSearch = this.handleSearch.bind(this);
-    // this.getUserGames = this.getUserGames.bind(this);
+    this.getUserGames = this.getUserGames.bind(this);
     this.fetchUserGroups = this.fetchUserGroups.bind(this);
     this.fetchAllGroups = this.fetchAllGroups.bind(this);
     this.addUserToGroup = this.addUserToGroup.bind(this);
@@ -25,7 +26,8 @@ export default class UserHome extends Component {
   }
 
   componentDidMount() {
-    // this.getUserGames(this.props.user.id)
+    console.log("HOME DID MOUNT", this.props);
+    this.getUserGames(this.props.user.id)
     this.fetchUserGroups(this.props.user.id)
     this.fetchAllGroups()
   }
@@ -41,7 +43,26 @@ export default class UserHome extends Component {
   //   })
   // }
 
+  getUserGames(id) {
+    fetch(`http://localhost:3000/api/v1/users/${id}/games`)
+      .then(resp => resp.json())
+      .then(games => {this.setState({
+        userGames: games
+      })
+    })
+  }
+
+  componentDidUpdate(prevProps) {
+    console.log("USER HOME DID UPDATE", this.props.user.id);
+    if (this.props !== prevProps) {
+      this.fetchUserGroups(this.props.user.id)
+      this.getUserGames(this.props.user.id)
+      // this.fetchAllGroups()
+    }
+  }
+
   fetchUserGroups(id) {
+    console.log("USER ID IN FETCH", id);
     fetch(`http://localhost:3000/api/v1/users/${id}/groups`)
       .then(resp => resp.json())
       .then(userGroups => this.setState({ userGroups }))
@@ -108,22 +129,27 @@ export default class UserHome extends Component {
   }
 
   render() {
+    console.log("HOME RENDER Props", this.props);
+    console.log("HOME RENDER STATE", this.state);
+    // let games = this.state.userGames.length > 1
+    // debugger
     return (
       <div className="UserHome container">
         <Grid divided>
           <Grid.Row>
             <Grid.Column width={8}>
               <SearchBar handleSearch={this.handleSearch} search={this.state.search}/>
-              <UserGames user={this.props.user}
+              {this.state.userGames && <UserGames user={this.props.user}
                 gameSearch={this.state.search}
-                games={this.props.userGames}
-              />
+                games={this.state.userGames}
+                                       />}
+              {/* <GamesContainer id={this.props.user.id} /> */}
             </Grid.Column>
             <Grid.Column width={4}>
               GAME NIGHTS
-              <UserEventList user={this.props.user} />
+              {/* <UserEventList user={this.props.user} /> */}
             </Grid.Column>
-            {this.renderGroups()}
+            {/* {this.renderGroups()} */}
           </Grid.Row>
         </Grid>
       </div>

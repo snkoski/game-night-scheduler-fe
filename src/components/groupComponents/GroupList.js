@@ -7,16 +7,40 @@ export default class GroupList extends Component {
     super(props);
     this.state = {
     }
+    this.renderGroups = this.renderGroups.bind(this);
+  }
+
+  componentDidUpdate() {
+    console.log("GROUP LIST DID UPDATE", this.props.user.id);
+
+  }
+
+  renderGroups() {
+    // console.log("GROUP PROPS", typeof this.props.groups);
+    // console.log(Array.isArray(this.props.groups));
+    if(Array.isArray(this.props.groups)) {
+      return (
+        <div>{this.props.groups.map((group) => {
+          return (
+            <GroupCard key={group.id} group={group} user={this.props.user} addGroup={this.props.addGroup} getCurrentGroup={this.props.getCurrentGroup}/>
+          )
+        })}</div>
+      )
+    }
+    return null
   }
 
   render() {
     return (
-      <div>{this.props.groups.map((group) => {
-        return (
-          <GroupCard key={group.id} group={group} user={this.props.user} addGroup={this.props.addGroup} getCurrentGroup={this.props.getCurrentGroup}/>
-        )
-      })}</div>
-    )
+    this.renderGroups()
+  )
+    // return (
+    //   <div>{this.props.groups.map((group) => {
+    //     return (
+    //       <GroupCard key={group.id} group={group} user={this.props.user} addGroup={this.props.addGroup} getCurrentGroup={this.props.getCurrentGroup}/>
+    //     )
+    //   })}</div>
+    // )
   }
 }
 

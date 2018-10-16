@@ -1,14 +1,18 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Redirect, Link } from 'react-router-dom';
 
 export default class LoginForm extends Component {
-  state = {
-    fields: {
-      username: '',
-      password: ''
+  constructor(props) {
+    super(props);
+    this.state = {
+      fields: {
+        username: '',
+        password: ''
+      },
+      redirect: false
     }
-
-  };
+  }
 
   handleChange = (e) => {
     const newFields = {...this.state.fields, [e.target.name]: e.target.value}
@@ -32,10 +36,20 @@ export default class LoginForm extends Component {
       .then(user => {
         this.props.onLogin(user)
       })
+      .then(() => this.setState({
+        redirect: true
+      }))
   };
 
   render() {
+    console.log(this.state.redirect);
     const { fields } = this.state
+
+    if (this.state.redirect === true) {
+      return (
+        <Redirect to="/welcome" />
+      )
+    }
 
     return (
       <div className="LoginForm container">
@@ -60,7 +74,7 @@ export default class LoginForm extends Component {
             <button type="submit">Submit</button>
           </div>
         </form>
-        <h3 id="signup" onClick={this.props.onNavBarClick}>Not a member? Click here to sign up</h3>
+        <h3 id="signup" ><Link to="/signup">Not a member? Click here to sign up</Link></h3>
       </div>
     )
   }
@@ -68,5 +82,4 @@ export default class LoginForm extends Component {
 
 LoginForm.propTypes = {
   onLogin: PropTypes.func.isRequired,
-  onNavBarClick: PropTypes.func.isRequired
 }

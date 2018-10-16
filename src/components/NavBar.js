@@ -24,15 +24,26 @@ export default class NavBar extends Component {
           <p>Home</p>
         </Menu.Item>
         <Menu.Item
+          as={NavLink}
+          to="/login"
+          name="logout"
           onClick={this.props.onLogout}
         >
           Log Out
+        </Menu.Item>
+        <Menu.Item as={NavLink} to="/signup" name="signup">
+
+          <p>Sign Up</p>
         </Menu.Item>
       </React.Fragment>
     }
 
     return (
       <React.Fragment>
+        <Menu.Item as={NavLink} to="/welcome" name="home">
+          <Icon name="home" size="large" />
+          <p>Home</p>
+        </Menu.Item>
         <Menu.Item as={NavLink} to="/login" name="login">
           <Icon name="home" size="large" />
           <p>Login</p>
@@ -104,7 +115,7 @@ export default class NavBar extends Component {
     return (
 
         <Menu className="NavBar" fixed="top">
-          {this.renderNavBar()}
+          {this.renderNavBar2()}
         </Menu>
 
     )

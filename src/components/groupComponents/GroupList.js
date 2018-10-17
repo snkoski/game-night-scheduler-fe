@@ -22,7 +22,10 @@ export default class GroupList extends Component {
       return (
         <div>{this.props.groups.map((group) => {
           return (
-            <GroupCard key={group.id} group={group} user={this.props.user} addGroup={this.props.addGroup} getCurrentGroup={this.props.getCurrentGroup}/>
+
+            <GroupCard key={group.id} group={group} user={this.props.user}
+              /*addGroup={this.props.addGroup}*/ getCurrentGroup={this.props.getCurrentGroup} />
+
           )
         })}</div>
       )
@@ -32,7 +35,7 @@ export default class GroupList extends Component {
 
   render() {
     return (
-    this.renderGroups()
+      this.renderGroups()
   )
     // return (
     //   <div>{this.props.groups.map((group) => {
@@ -46,7 +49,7 @@ export default class GroupList extends Component {
 
 GroupList.propTypes = {
   user: PropTypes.object.isRequired,
-  groups: PropTypes.array.isRequired,
-  addGroup: PropTypes.func,
-  games: PropTypes.array
+  // groups: PropTypes.array.isRequired,
+  // addGroup: PropTypes.func,
+  // games: PropTypes.array
 }

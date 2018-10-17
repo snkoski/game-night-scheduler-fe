@@ -1,46 +1,55 @@
 import React, { Component } from 'react';
-import { List } from 'semantic-ui-react';
-
 import GameCard from './GameCard';
+import GamesList from './GamesList';
+import { Grid } from 'semantic-ui-react';
+import SearchBar from '../SearchBar';
 
-export default class UserGames extends Component {
+class UserGames extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-    };
-    this.renderGames = this.renderGames.bind(this);
+    this.state={
+      search: '',
+    }
+    this.handleSearch = this.handleSearch.bind(this);
+    this.getCurrentGame = this.getCurrentGame.bind(this);
   }
 
-  componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
-
-    }
+  handleSearch(e) {
+    this.setState({
+      search: e.target.value
+    })
   }
 
-  renderGames() {
-    if (Array.isArray(this.props.games)) {
-      let searched_games = this.props.games.filter((game) => {
-        return game.name.toLowerCase().includes(this.props.gameSearch.toLowerCase())
-      })
-      return(
-        <div className="UserGames container segment ui">
-          <h3>You have {this.props.games.length} games</h3>
-          <List selection verticalAlign="middle">
-            {searched_games.map((game) => {
-              return <GameCard key={game.bgg_id} game={game} />
-            })}
-          </List>
-        </div>
-      )
-    }
-
-    return <h3>Loading Games</h3>
+  getCurrentGame(e) {
+    console.log("GAME CLICK", e.target.id);
+    let currentGame = this.props.userGames.find((game) => {
+      return game.bgg_id === e.target.dataset.gameId
+    })
+    this.setState({
+      currentGame: currentGame
+    })
   }
 
   render() {
-    console.log("USER GAMES", this.props);
     return (
-      this.renderGames()
-    )
+<Grid divided>
+  <Grid.Row>
+    <Grid.Column width={8}>
+      <SearchBar handleSearch={this.handleSearch} search={this.state.search}/>
+
+      {this.props.userGames && <GamesList user={this.props.user}
+        gameSearch={this.state.search}
+        games={this.props.userGames}
+        getCurrentGame={this.getCurrentGame}
+                               />}
+    </Grid.Column>
+    <Grid.Column width={8}>
+      Game
+      {this.state.currentGame && <GameCard key={this.state.currentGame.bgg_id} game={this.state.currentGame} />}
+    </Grid.Column>
+  </Grid.Row>
+</Grid>)
   }
 }
+
+export default UserGames

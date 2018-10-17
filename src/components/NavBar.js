@@ -23,6 +23,14 @@ export default class NavBar extends Component {
           <Icon name="home" size="large" />
           <p>Home</p>
         </Menu.Item>
+        <Menu.Item as={NavLink} to="/home/games" name="games">
+
+          <p>Games</p>
+        </Menu.Item>
+        <Menu.Item as={NavLink} to="/home/groups" name="groups">
+
+          <p>Groups</p>
+        </Menu.Item>
         <Menu.Item
           as={NavLink}
           to="/login"
@@ -31,19 +39,11 @@ export default class NavBar extends Component {
         >
           Log Out
         </Menu.Item>
-        <Menu.Item as={NavLink} to="/signup" name="signup">
-
-          <p>Sign Up</p>
-        </Menu.Item>
       </React.Fragment>
     }
 
     return (
       <React.Fragment>
-        <Menu.Item as={NavLink} to="/welcome" name="home">
-          <Icon name="home" size="large" />
-          <p>Home</p>
-        </Menu.Item>
         <Menu.Item as={NavLink} to="/login" name="login">
           <Icon name="home" size="large" />
           <p>Login</p>
@@ -111,9 +111,7 @@ export default class NavBar extends Component {
   }
 
   render() {
-    console.log(this.props);
     return (
-
         <Menu className="NavBar" fixed="top">
           {this.renderNavBar2()}
         </Menu>

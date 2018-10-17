@@ -1,14 +1,43 @@
-import React from 'react'
+import React, { Component } from 'react';
+import { List } from 'semantic-ui-react';
+
 import GameCard from './GameCard';
 
-const GamesList = ({games}) => (
+export default class UserGames extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+    };
+    this.renderGames = this.renderGames.bind(this);
+  }
 
-  <div><ul>
-    {games.map((game) =>
-      <li><GameCard game={game} /></li>
+  renderGames() {
+    if (Array.isArray(this.props.games)) {
 
-    )}
-  </ul></div>
-)
+      let userGames = this.props.games
+      .sort((a,b) => a.name.localeCompare(b.name))
+      .filter((game) => game.name.toLowerCase().includes(this.props.gameSearch.toLowerCase()))
 
-export default GamesList
+      return(
+        <div className="UserGames container segment ui" onClick={this.props.getCurrentGame}>
+          <h3>You have {this.props.games.length} games</h3>
+          <List selection verticalAlign="middle">
+            {userGames.map((game) => {
+              return <div key={game.bgg_id} data-game-id={game.bgg_id}>{game.name}</div>
+            })}
+          </List>
+        </div>
+      )
+    }
+
+    return <h3>Loading Games</h3>
+  }
+
+  render() {
+    return (
+
+        this.renderGames()
+
+        )
+  }
+}

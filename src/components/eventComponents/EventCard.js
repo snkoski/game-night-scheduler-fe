@@ -37,7 +37,7 @@ export default class EventCard extends Component {
       .then(resp => resp.json())
       .then(members => {
         this.setState({ members })
-        if (members.find((member) => member.username === this.props.user.username)) this.setState({ joinedEvent: true })
+        // if (members.find((member) => member.username === this.props.user.username)) this.setState({ joinedEvent: true })
       })
 
   }
@@ -107,7 +107,7 @@ export default class EventCard extends Component {
 
 EventCard.propTypes = {
   event: PropTypes.object.isRequired,
-  member: PropTypes.object,
+  // member: PropTypes.object,
   user: PropTypes.object.isRequired,
   cancelEvent: PropTypes.func
 }

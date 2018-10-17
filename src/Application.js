@@ -24,8 +24,7 @@ class Application extends Component {
   }
 
   componentDidMount() {
-    console.log("APPlication DID MOUNT");
-
+    this._isMounted = true;
     const token = localStorage.getItem('token')
     if (token) {
       const options = {
@@ -44,6 +43,10 @@ class Application extends Component {
       })
       })
     }
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   handleLogin(user) {
@@ -66,6 +69,11 @@ class Application extends Component {
     });
   };
 
+  // checkLogin = () => {
+  //   const loggedIn = localStorage.getItem('token')
+  //   return loggedIn ? null : this.props.history.push('/login')
+  // }
+
   render() {
 
     const loggedIn = !!this.state.auth.currentUser.id;
@@ -76,6 +84,7 @@ class Application extends Component {
           currentUser={this.state.auth.currentUser}
           onLogout={this.handleLogout}
          />}
+        <div>HLELELELELELELEOOOOOOOOOOO</div>
         <Switch>
 
           <PrivateRoute path="/welcome" loggedIn={loggedIn} component={Welcome} />
@@ -86,9 +95,22 @@ class Application extends Component {
                    />
           })} />
 
-          <Route path="/signup" loggedIn={loggedIn} component={AddPropsToRoute(SignupForm, {onLogin: this.handleLogin, test: "Hello"})} />
+          <Route path="/home" render={((props) => {
+            return <UserHome
+              {...props}
+              user={this.state.auth.currentUser}
 
-          <Route path="/home" loggedIn={loggedIn} component={AddPropsToRoute(UserHome, {user: this.state.auth.currentUser})} />
+                   />
+          })} />
+          <Route path="/signup" render={(() => {
+            return <SignupForm
+              onLogin={this.handleLogin}
+                   />
+          })} />
+
+          {/* <Route path="/signup" loggedIn={loggedIn} component={AddPropsToRoute(SignupForm, {onLogin: this.handleLogin, test: "Hello"})} />
+
+          <Route path="/home" loggedIn={loggedIn} component={AddPropsToRoute(UserHome, {user: this.state.auth.currentUser})} /> */}
         </Switch>
       </div>
     );

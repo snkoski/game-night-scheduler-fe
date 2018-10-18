@@ -10,12 +10,18 @@ export default class GroupCard extends Component {
       users: []
     }
     this.joinGroup = this.joinGroup.bind(this);
+    this.fetchMembers = this.fetchMembers.bind(this);
   }
 
   componentDidMount() {
-    fetch(`http://localhost:3000/api/v1/groups/${this.props.group.id}/users`)
-      .then(resp => resp.json())
-      .then(users => this.setState({ users }))
+    this.fetchMembers()
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    console.log("USER HOME DID UPDATE", this.props.user.id);
+    if (this.props !== prevProps) {
+      this.fetchMembers()
+    }
   }
 
   joinGroup() {
@@ -33,17 +39,25 @@ export default class GroupCard extends Component {
         users: [...this.state.users, user]
       }))
       .then(() => {
-        this.props.addGroup(this.props.group)
+        this.props.addUserToGroup(this.props.group)
       })
+  }
+
+  fetchMembers() {
+    fetch(`http://localhost:3000/api/v1/groups/${this.props.group.id}/users`)
+      .then(resp => resp.json())
+      .then(users => this.setState({ users }))
   }
 
 
 
   render() {
+    console.log("GROUp CARD PROPS", this.props);
+    console.log("GROUP CARD STATE", this.state);
     const member = this.state.users.filter((user) => {
       return user.id === this.props.user.id
     }).length
-
+    console.log("MEMBER", member);
     return (
       <div >
         <h3>{this.props.group.name}</h3>

@@ -25,7 +25,7 @@ export default class UserHome extends Component {
     // this.renderGames = this.renderGames.bind(this);
     this.fetchUserGroups = this.fetchUserGroups.bind(this);
     this.fetchAllGroups = this.fetchAllGroups.bind(this);
-    // this.addUserToGroup = this.addUserToGroup.bind(this);
+    this.addUserToGroup = this.addUserToGroup.bind(this);
     // this.renderGroups = this.renderGroups.bind(this);
     // this.toggleGroups = this.toggleGroups.bind(this);
   }
@@ -73,12 +73,12 @@ export default class UserHome extends Component {
       .then(allGroups => this.setState({ allGroups }))
   }
   //
-  // addUserToGroup(group) {
-  //   group.number_of_members += 1
-  //   this.setState({
-  //     userGroups: [...this.state.userGroups, group]
-  //   })
-  // }
+  addUserToGroup(group) {
+    group.number_of_members += 1
+    this.setState({
+      userGroups: [...this.state.userGroups, group]
+    })
+  }
 
   // handleSearch(e) {
   //   this.setState({
@@ -199,6 +199,7 @@ export default class UserHome extends Component {
             user={this.props.user}
             userGroups={this.state.userGroups}
             allGroups={this.state.allGroups}
+            addUserToGroup={this.addUserToGroup}
             // getCurrentGroup={this.props.getCurrentGroup}
             // games={this.state.userGames}
                  />

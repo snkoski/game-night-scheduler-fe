@@ -30,7 +30,7 @@ import React from 'react';
 const UserGroupsList = (props) => (
   Array.isArray(props.groups) ?
   <div>
-    <h1>Your Groups</h1>
+    <h1>{props.text} Groups</h1>
     <ul>
       {props.groups.map((group) => {
         return <li>

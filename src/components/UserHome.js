@@ -31,7 +31,6 @@ export default class UserHome extends Component {
   }
 
   componentDidMount() {
-    console.log("HOME DID MOUNT", this.props);
     this._isMounted = true;
     this.fetchUserGames(this.props.user.id)
     this.fetchUserGroups(this.props.user.id)
@@ -43,7 +42,6 @@ export default class UserHome extends Component {
   }
 
   componentDidUpdate(prevProps, prevState) {
-    console.log("USER HOME DID UPDATE", this.props.user.id);
     if (this.props !== prevProps) {
       this.fetchUserGames(this.props.user.id)
       this.fetchUserGroups(this.props.user.id)
@@ -61,7 +59,6 @@ export default class UserHome extends Component {
   }
 
   fetchUserGroups(id) {
-    console.log("USER ID IN FETCH", id);
     fetch(`http://localhost:3000/api/v1/users/${id}/groups`)
       .then(resp => resp.json())
       .then(userGroups => this.setState({ userGroups }))
@@ -181,8 +178,6 @@ export default class UserHome extends Component {
   //   )
   // }
   render() {
-    console.log("HOME RENDER Props", this.props);
-    console.log("HOME RENDER STATE", this.state);
 
     return (
       <div className="UserHome container">
@@ -194,8 +189,9 @@ export default class UserHome extends Component {
             userGames={this.state.userGames} user={this.props.user}
                  />
         })} />
-        <Route path={this.props.match.url + "/groups"} render={(() => {
+        <Route path={this.props.match.url + "/groups"} render={((props) => {
           return <GroupContainer
+            {...props}
             user={this.props.user}
             userGroups={this.state.userGroups}
             allGroups={this.state.allGroups}
@@ -204,6 +200,8 @@ export default class UserHome extends Component {
             // games={this.state.userGames}
                  />
         })} />
+
+
 
       </div>
     )

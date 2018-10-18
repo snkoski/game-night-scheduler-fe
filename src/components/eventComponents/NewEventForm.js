@@ -41,7 +41,7 @@ export default class NewEventForm extends Component {
     }
     fetch(`http://localhost:3000/api/v1/groups/${this.props.group.id}/events`, options)
     .then(resp => resp.json())
-    .then(() => this.props.goHome())
+    .then(() => this.props.closeForm())
   }
 
   render() {
@@ -49,7 +49,7 @@ export default class NewEventForm extends Component {
     let today = moment().format("YYYY-MM-DD")
 
     return (
-      <div className="NewEventForm container">
+      <div className="NewEventForm">
         <form onSubmit={this.handleSubmit}>
           <div>
             <input type="text"

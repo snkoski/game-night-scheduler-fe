@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 import { Grid } from 'semantic-ui-react';
+import { Link, Route } from 'react-router-dom';
+
 import _ from 'lodash';
 import GroupCard from './GroupCard';
 import GroupList from './GroupList';
 import GroupMembersContainer from './GroupMembersContainer';
 import GroupEventsContainer from './GroupEventsContainer';
 import UserGroupsList from './UserGroupsList';
+import NewEventForm from '../eventComponents/NewEventForm';
+
 
 
 class GroupsContainer extends Component {
@@ -13,15 +17,18 @@ class GroupsContainer extends Component {
     super(props);
     this.state = {
       allGroups: false,
-
+      showForm: false
     }
     this.getCurrentGroup = this.getCurrentGroup.bind(this);
     this.toggleGroups = this.toggleGroups.bind(this);
     this.filterGroups = this.filterGroups.bind(this);
+    this.toggleForm = this.toggleForm.bind(this);
   }
 
   componentDidMount() {
-
+    if (this.props.userGroups.length) {
+      this.setState({ currentGroup: this.props.userGroups[0] })
+    }
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -37,11 +44,16 @@ class GroupsContainer extends Component {
     })
   }
 
+  toggleForm() {
+    this.setState((prevState) => {
+      return { showForm: !prevState.showForm }
+    })
+  }
+
   getCurrentGroup(e) {
     let currentGroup = this.props.allGroups.find((group) => {
       return group.id === parseInt(e.target.dataset.eventId, 10)
     })
-    console.log("GET CURRENT GROUP", typeof e.target.dataset.eventId);
     this.setState({
       currentGroup: currentGroup
     })
@@ -68,10 +80,8 @@ class GroupsContainer extends Component {
   }
 
   render() {
-    console.log("Groups Con", this.state);
     let text = this.state.allGroups ? "Other" : "Your"
     let selectedGroup = this.state.allGroups ? this.state.notIn : this.props.userGroups
-    console.log('SELECTed gROUP', selectedGroup);
     return (
 <Grid divided>
   <Grid.Row>
@@ -83,7 +93,11 @@ class GroupsContainer extends Component {
     </Grid.Column>
     <Grid.Column width={8}>
       Group
-      {this.state.currentGroup && <div><GroupCard group={this.state.currentGroup} user={this.props.user} addUserToGroup={this.props.addUserToGroup} /> <GroupMembersContainer group={this.state.currentGroup} />
+      {this.state.currentGroup && <div><GroupCard group={this.state.currentGroup} user={this.props.user} addUserToGroup={this.props.addUserToGroup} /><button type="button" onClick={this.toggleForm}>{this.state.showForm ? "Cancel" : "New Game Night"}</button> {this.state.showForm && <NewEventForm
+        closeForm={this.toggleForm}
+        user={this.props.user}
+        group={this.state.currentGroup} />}
+        <GroupMembersContainer group={this.state.currentGroup} />
         <GroupEventsContainer user={this.props.user} group={this.state.currentGroup} /> </div>}
     </Grid.Column>
   </Grid.Row>
@@ -97,3 +111,10 @@ export default GroupsContainer
   groups={selectedGroup}
   getCurrentGroup={this.getCurrentGroup}
   games={this.state.userGames}/> */}
+
+  // {this.state.showForm && <Route path={this.props.match.url + "/new_event"} render={(() => {
+  //   return <NewEventForm
+  //     user={this.props.user}
+  //     group={this.state.currentGroup}
+  //          />
+  // })} />}

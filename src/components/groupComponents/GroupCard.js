@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Button } from 'semantic-ui-react';
+import { Link, Route } from 'react-router-dom';
+import NewEventForm from '../eventComponents/NewEventForm';
 
 
 export default class GroupCard extends Component {
@@ -49,8 +51,6 @@ export default class GroupCard extends Component {
       .then(users => this.setState({ users }))
   }
 
-
-
   render() {
     console.log("GROUp CARD PROPS", this.props);
     console.log("GROUP CARD STATE", this.state);
@@ -66,6 +66,7 @@ export default class GroupCard extends Component {
         {!member ? <Button className="link" onClick={this.joinGroup}>Join Group</Button> : null }
 
         {this.props.getCurrentGroup ? <Button onClick={() => this.props.getCurrentGroup(this.props.group)}>See Group </Button> : null}
+
       </div>
     )
   }

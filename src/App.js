@@ -226,6 +226,12 @@ constructor(props) {
               onLogin={this.handleLogin}
                    />
           })} />
+          <Route path="/new_event" render={(() => {
+            return <NewEventForm
+              user={this.state.auth.currentUser}
+              group={this.state.currentGroup}
+                   />
+          })} />
           <Route exact path="/" component={Welcome} />
         </Switch> }
         {/* {loggedIn ? this.renderContent() : <LoginForm

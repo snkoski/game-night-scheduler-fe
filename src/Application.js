@@ -7,6 +7,7 @@ import Welcome from './components/Welcome';
 import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import UserHome from './components/UserHome';
+import NewEventForm from './components/eventComponents/NewEventForm';
 
 import PrivateRoute from './components/PrivateRoute';
 import AddPropsToRoute from './components/AddPropsToRoute';
@@ -107,6 +108,13 @@ class Application extends Component {
               onLogin={this.handleLogin}
                    />
           })} />
+
+          {/* <Route path="/new_event" render={(() => {
+            return <NewEventForm
+              user={this.state.auth.currentUser}
+              // group={this.state.currentGroup}
+            />
+          })} /> */}
 
           {/* <Route path="/signup" loggedIn={loggedIn} component={AddPropsToRoute(SignupForm, {onLogin: this.handleLogin, test: "Hello"})} />
 

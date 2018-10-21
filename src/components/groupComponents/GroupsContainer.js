@@ -91,6 +91,7 @@ class GroupsContainer extends Component {
       {selectedGroup && <UserGroupsList groups={selectedGroup} getGroup={this.getCurrentGroup} text={text} />}
       <p>testing paragraph</p>
     </Grid.Column>
+
     <Grid.Column width={8}>
       Group
       {this.state.currentGroup && <div><GroupCard group={this.state.currentGroup} user={this.props.user} addUserToGroup={this.props.addUserToGroup} /><button type="button" onClick={this.toggleForm}>{this.state.showForm ? "Cancel" : "New Game Night"}</button> {this.state.showForm && <NewEventForm
@@ -100,21 +101,10 @@ class GroupsContainer extends Component {
         <GroupMembersContainer group={this.state.currentGroup} />
         <GroupEventsContainer user={this.props.user} group={this.state.currentGroup} /> </div>}
     </Grid.Column>
+
   </Grid.Row>
 </Grid>)
   }
 }
 
 export default GroupsContainer
-
-{/* <GroupList user={this.props.user}
-  groups={selectedGroup}
-  getCurrentGroup={this.getCurrentGroup}
-  games={this.state.userGames}/> */}
-
-  // {this.state.showForm && <Route path={this.props.match.url + "/new_event"} render={(() => {
-  //   return <NewEventForm
-  //     user={this.props.user}
-  //     group={this.state.currentGroup}
-  //          />
-  // })} />}

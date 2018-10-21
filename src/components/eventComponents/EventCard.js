@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import * as moment from 'moment';
 import { Route, Link } from 'react-router-dom';
 import AddGamesToVote from '../voteComponents/AddGamesToVote';
+import VotePage from '../voteComponents/VotePage';
 
 export default class EventCard extends Component {
   constructor(props) {
@@ -93,13 +94,13 @@ export default class EventCard extends Component {
         {onGroupPage && <button type="button" onClick={() => this.props.cancelEvent(this.props.event.id)}>Cancel Event</button>}
 
 
-        <Route path="/add" render={(() => {
-          return <AddGamesToVote
-            user={this.props.user}
-            event={this.props.event}
+        {/* <Route path="/add" render={(() => {
+          return <VotePage
+            // user={this.props.user}
+            // event={this.props.event}
             // games={this.state.userGames}
-                 />
-        })} />
+          />
+        })} /> */}
       </div>
     )
   }

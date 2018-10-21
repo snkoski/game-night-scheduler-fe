@@ -12,7 +12,8 @@ import LoadingIndicator from './components/LoadingIndicator';
 import GroupPage from './components/groupComponents/GroupPage';
 import NewEventForm from './components/eventComponents/NewEventForm';
 import AddGamesToVote from './components/voteComponents/AddGamesToVote';
-// import ProtectedRoute from './components/ProtectedRoute';
+import PrivateRoute from './components/PrivateRoute';
+import VotePage from './components/voteComponents/VotePage';
 
 
 class App extends Component {
@@ -191,8 +192,8 @@ constructor(props) {
           onLogout={this.handleLogout}
         />
         { <Switch>
-          {/* <ProtectedRoute path="/welcome" loggedIn={loggedIn} component={Welcome} />
-            <ProtectedRoute path="/home" loggedIn={loggedIn} render={(() => {
+          <PrivateRoute path="/welcome" loggedIn={loggedIn} component={Welcome} />
+          {/*<ProtectedRoute path="/home" loggedIn={loggedIn} render={(() => {
             return <UserHome
               user={this.state.auth.currentUser}
               changePage={this.handlePageChange}
@@ -202,17 +203,18 @@ constructor(props) {
 
 
           })} /> */}
-          <Route path="/welcome" component={Welcome} />
-          <Route path="/home" render={(() => {
-            return <UserHome
-              user={this.state.auth.currentUser}
-              changePage={this.handlePageChange}
-              getCurrentGroup={this.getCurrentGroup}
-              userGames={this.state.userGames}
-                   />
+          {/* <Route path="/welcome" component={Welcome} /> */}
+
+            <Route path="/home" render={(() => {
+              return <UserHome
+                user={this.state.auth.currentUser}
+                changePage={this.handlePageChange}
+                getCurrentGroup={this.getCurrentGroup}
+                userGames={this.state.userGames}
+                     />
 
 
-          })} />
+            })} />
           <Route path="/login" render={(() => {
             return <LoginForm
               onLogin={this.handleLogin}
@@ -232,6 +234,13 @@ constructor(props) {
               group={this.state.currentGroup}
                    />
           })} />
+          {/* <Route path="/add" render={(() => {
+              return <VotePage
+              // user={this.props.user}
+              // event={this.props.event}
+              // games={this.state.userGames}
+              />
+            })} /> */}
           <Route exact path="/" component={Welcome} />
         </Switch> }
         {/* {loggedIn ? this.renderContent() : <LoginForm

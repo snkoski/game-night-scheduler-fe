@@ -15,3 +15,7 @@ export default class VoteList extends Component {
     )
   }
 }
+
+
+<p>{game.name}</p>
+<p>Number of Votes: {game.votes}</p>

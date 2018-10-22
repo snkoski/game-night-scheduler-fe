@@ -34,7 +34,9 @@ const UserGroupsList = (props) => (
     <ul>
       {props.groups.map((group) => {
         return <li>
-          {group.name}
+          <h3>{group.name}</h3>
+          <p>Number of members: {group.number_of_members}</p>
+          <p>Meeting day: {group.regular_meeting_day ? group.regular_meeting_day : 'TBA'}</p>
           <button type="button" onClick={props.getGroup} data-event-id={group.id}>See Group</button>
         </li>
       })}

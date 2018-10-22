@@ -12,7 +12,7 @@ import LoadingIndicator from './components/LoadingIndicator';
 import GroupPage from './components/groupComponents/GroupPage';
 import NewEventForm from './components/eventComponents/NewEventForm';
 import AddGamesToVote from './components/voteComponents/AddGamesToVote';
-import PrivateRoute from './components/PrivateRoute';
+// import ProtectedRoute from './components/ProtectedRoute';
 import VotePage from './components/voteComponents/VotePage';
 
 
@@ -192,8 +192,8 @@ constructor(props) {
           onLogout={this.handleLogout}
         />
         { <Switch>
-          <PrivateRoute path="/welcome" loggedIn={loggedIn} component={Welcome} />
-          {/*<ProtectedRoute path="/home" loggedIn={loggedIn} render={(() => {
+          {/* <ProtectedRoute path="/welcome" loggedIn={loggedIn} component={Welcome} />
+            <ProtectedRoute path="/home" loggedIn={loggedIn} render={(() => {
             return <UserHome
               user={this.state.auth.currentUser}
               changePage={this.handlePageChange}
@@ -203,7 +203,7 @@ constructor(props) {
 
 
           })} /> */}
-          {/* <Route path="/welcome" component={Welcome} /> */}
+          <Route path="/welcome" component={Welcome} />
 
             <Route path="/home" render={(() => {
               return <UserHome

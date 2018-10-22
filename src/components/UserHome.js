@@ -9,6 +9,7 @@ import GroupList from './groupComponents/GroupList';
 import UserEventList from './eventComponents/UserEventList';
 import GamesContainer from './gameComponents/GamesContainer';
 import GameCard from './gameComponents/GameCard';
+import NewGroupsContainer from './groupComponents/NewGroupsContainer'
 
 export default class UserHome extends Component {
   constructor(props) {
@@ -177,33 +178,42 @@ export default class UserHome extends Component {
   //     </div>
   //   )
   // }
-  render() {
+//   render() {
+//
+//     return (
+//       <div className="UserHome container">
+//         <h1>Home</h1>
+//
+//         {/* <UserGames userGames={this.state.userGames} user={this.props.user}/> */}
+//         <Route path={this.props.match.url + "/games"} render={(() => {
+//           return <UserGames
+//             userGames={this.state.userGames} user={this.props.user}
+//                  />
+//         })} />
+//         <Route path={this.props.match.url + "/groups"} render={((props) => {
+//           return <GroupContainer
+//             {...props}
+//             user={this.props.user}
+//             userGroups={this.state.userGroups}
+//             allGroups={this.state.allGroups}
+//             addUserToGroup={this.addUserToGroup}
+//             // getCurrentGroup={this.props.getCurrentGroup}
+//             // games={this.state.userGames}
+//                  />
+//         })} />
+//
+//
+//
+//       </div>
+//     )
+//   }
+// }
+render() {
 
-    return (
-      <div className="UserHome container">
-        <h1>Home</h1>
-
-        {/* <UserGames userGames={this.state.userGames} user={this.props.user}/> */}
-        <Route path={this.props.match.url + "/games"} render={(() => {
-          return <UserGames
-            userGames={this.state.userGames} user={this.props.user}
-                 />
-        })} />
-        <Route path={this.props.match.url + "/groups"} render={((props) => {
-          return <GroupContainer
-            {...props}
-            user={this.props.user}
-            userGroups={this.state.userGroups}
-            allGroups={this.state.allGroups}
-            addUserToGroup={this.addUserToGroup}
-            // getCurrentGroup={this.props.getCurrentGroup}
-            // games={this.state.userGames}
-                 />
-        })} />
-
-
-
-      </div>
-    )
-  }
+  return (
+    <div className="container">
+      <NewGroupsContainer user={this.props.user}/>
+    </div>
+  )
+}
 }

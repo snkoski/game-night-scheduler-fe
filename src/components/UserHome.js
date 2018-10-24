@@ -32,6 +32,7 @@ export default class UserHome extends Component {
   }
 
   componentDidMount() {
+    console.log("USER HOME DID MOUNT");
     this._isMounted = true;
     this.fetchUserGames(this.props.user.id)
     this.fetchUserGroups(this.props.user.id)
@@ -211,9 +212,10 @@ export default class UserHome extends Component {
 render() {
 
   return (
-    <div className="container">
-      <NewGroupsContainer user={this.props.user}/>
-    </div>
+    // <div className="container">
+    //   <NewGroupsContainer user={this.props.user}/>
+    // </div>
+    <div className="container">USER HOME</div>
   )
 }
 }

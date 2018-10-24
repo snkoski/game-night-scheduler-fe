@@ -8,6 +8,7 @@ import LoginForm from './components/LoginForm';
 import SignupForm from './components/SignupForm';
 import UserHome from './components/UserHome';
 import NewEventForm from './components/eventComponents/NewEventForm';
+import NewGroupsContainer from './components/groupComponents/NewGroupsContainer';
 
 import PrivateRoute from './components/PrivateRoute';
 import AddPropsToRoute from './components/AddPropsToRoute';
@@ -89,6 +90,10 @@ class Application extends Component {
         <Switch>
 
           <PrivateRoute path="/welcome" loggedIn={loggedIn} component={Welcome} />
+
+          <Route path="/groups" render={((props) => {
+            return <NewGroupsContainer user={this.state.auth.currentUser}/>
+          })} />
 
           <Route path="/login" render={(() => {
             return <LoginForm

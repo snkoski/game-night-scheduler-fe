@@ -18,6 +18,7 @@ class NewGroupsContainer extends Component {
   }
 
   componentDidMount() {
+    console.log("GROUP CONTAINER DID MOUNT");
     this.fetchUserGroups()
     this.fetchAllGroups()
   }

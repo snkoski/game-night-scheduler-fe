@@ -21,8 +21,13 @@ export default class EventCard extends Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     this.fetchMembers()
 
+  }
+
+  componentWillUnmount() {
+    this._isMounted = false;
   }
 
   formatDate(date) {

@@ -7,31 +7,31 @@ class GroupMembersContainer extends Component {
     this.state = {
 
     }
-    this.fetchGroupMembers = this.fetchGroupMembers.bind(this);
+    // this.fetchGroupMembers = this.fetchGroupMembers.bind(this);
   }
 
   componentDidMount() {
-    this.fetchGroupMembers()
+    // this.fetchGroupMembers()
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
-      this.fetchGroupMembers()
-    }
+    // if (this.props !== prevProps) {
+    //   this.fetchGroupMembers()
+    // }
   }
 
-  fetchGroupMembers() {
-    fetch(`http://localhost:3000/api/v1/groups/${this.props.group.id}/users`)
-    .then(resp => resp.json())
-    .then(members => this.setState({
-      members
-    }))
-  }
-  
+  // fetchGroupMembers() {
+  //   fetch(`http://localhost:3000/api/v1/groups/${this.props.group.id}/users`)
+  //   .then(resp => resp.json())
+  //   .then(members => this.setState({
+  //     members
+  //   }))
+  // }
+
   render() {
     return (
       <div>
-        {this.state.members && <GroupMembersList members={this.state.members}/>}
+        {this.props.members && <GroupMembersList members={this.props.members}/>}
       </div>
         )
   }

@@ -7,30 +7,30 @@ class GroupEventsContainer extends Component {
     this.state = {
 
     }
-    this.fetchGroupEvents = this.fetchGroupEvents.bind(this);
+    // this.fetchGroupEvents = this.fetchGroupEvents.bind(this);
   }
 
   componentDidMount() {
-    this.fetchGroupEvents()
+    // this.fetchGroupEvents()
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props !== prevProps) {
-      this.fetchGroupEvents()
-    }
+    // if (this.props !== prevProps) {
+    //   this.fetchGroupEvents()
+    // }
   }
 
-  fetchGroupEvents() {
-    fetch(`http://localhost:3000/api/v1/groups/${this.props.group.id}/events`)
-    .then(resp => resp.json())
-    .then(events => this.setState({
-      events
-    }))
-  }
+  // fetchGroupEvents() {
+  //   fetch(`http://localhost:3000/api/v1/groups/${this.props.group.id}/events`)
+  //   .then(resp => resp.json())
+  //   .then(events => this.setState({
+  //     events
+  //   }))
+  // }
 render() {
     return (
       <div>
-        {this.state.events && <EventList user={this.props.user} events={this.state.events} />}
+        {this.props.events && <EventList user={this.props.user} events={this.props.events} />}
       </div>
         )
   }

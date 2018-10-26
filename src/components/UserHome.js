@@ -16,16 +16,16 @@ export default class UserHome extends Component {
     super(props);
     this.state = {
       userGames: [],
-      userGroups: [],
-      allGroups: [],
+      // userGroups: [],
+      // allGroups: [],
       // groupsToogle: true
     }
     // this.handleSearch = this.handleSearch.bind(this);
     this.fetchUserGames = this.fetchUserGames.bind(this);
     // this.getCurrentGame = this.getCurrentGame.bind(this);
     // this.renderGames = this.renderGames.bind(this);
-    this.fetchUserGroups = this.fetchUserGroups.bind(this);
-    this.fetchAllGroups = this.fetchAllGroups.bind(this);
+    // this.fetchUserGroups = this.fetchUserGroups.bind(this);
+    // this.fetchAllGroups = this.fetchAllGroups.bind(this);
     this.addUserToGroup = this.addUserToGroup.bind(this);
     // this.renderGroups = this.renderGroups.bind(this);
     // this.toggleGroups = this.toggleGroups.bind(this);
@@ -35,8 +35,8 @@ export default class UserHome extends Component {
     console.log("USER HOME DID MOUNT");
     this._isMounted = true;
     this.fetchUserGames(this.props.user.id)
-    this.fetchUserGroups(this.props.user.id)
-    this.fetchAllGroups()
+    // this.fetchUserGroups(this.props.user.id)
+    // this.fetchAllGroups()
   }
 
   componentWillUnmount() {
@@ -46,8 +46,8 @@ export default class UserHome extends Component {
   componentDidUpdate(prevProps, prevState) {
     if (this.props !== prevProps) {
       this.fetchUserGames(this.props.user.id)
-      this.fetchUserGroups(this.props.user.id)
-      this.fetchAllGroups()
+      // this.fetchUserGroups(this.props.user.id)
+      // this.fetchAllGroups()
     }
   }
 
@@ -60,17 +60,17 @@ export default class UserHome extends Component {
     })
   }
 
-  fetchUserGroups(id) {
-    fetch(`http://localhost:3000/api/v1/users/${id}/groups`)
-      .then(resp => resp.json())
-      .then(userGroups => this.setState({ userGroups }))
-  }
+  // fetchUserGroups(id) {
+  //   fetch(`http://localhost:3000/api/v1/users/${id}/groups`)
+  //     .then(resp => resp.json())
+  //     .then(userGroups => this.setState({ userGroups }))
+  // }
 
-  fetchAllGroups() {
-    fetch(`http://localhost:3000/api/v1/groups`)
-      .then(resp => resp.json())
-      .then(allGroups => this.setState({ allGroups }))
-  }
+  // fetchAllGroups() {
+  //   fetch(`http://localhost:3000/api/v1/groups`)
+  //     .then(resp => resp.json())
+  //     .then(allGroups => this.setState({ allGroups }))
+  // }
   //
   addUserToGroup(group) {
     group.number_of_members += 1

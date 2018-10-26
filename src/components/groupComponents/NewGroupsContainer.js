@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 
 import UserGroupsList from './UserGroupsList';
+import GroupCard from './GroupCard';
+import GroupMembersContainer from './GroupMembersContainer';
+import GroupEventsContainer from './GroupEventsContainer';
 
 class NewGroupsContainer extends Component {
   constructor(props) {
@@ -11,10 +14,12 @@ class NewGroupsContainer extends Component {
       userGroups: [],
       nonUserGroups: [],
       selectedGroup: {},
-      selectedGroupMembers: [],
-      selectedGroupEvents: [],
-      showAllGroups: false
+      // selectedGroupMembers: [],
+      // selectedGroupEvents: [],
+      showNonUserGroups: false,
+      showGroup: false
     }
+    this.renderPage = this.renderPage.bind(this)
   }
 
   componentDidMount() {
@@ -22,6 +27,10 @@ class NewGroupsContainer extends Component {
     this.fetchUserGroups()
     this.fetchAllGroups()
   }
+
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   return this.state.allGroups !== nextState.allGroups
+  // }
 
   componentDidUpdate(prevProps, prevState) {
     if (this.props.user !== prevProps.user) {
@@ -31,9 +40,11 @@ class NewGroupsContainer extends Component {
   }
 
   fetchUserGroups = () => {
+    console.log("FETCH USER GROUPS");
     fetch(`http://localhost:3000/api/v1/users/${this.props.user.id}/groups`)
       .then(resp => resp.json())
-      .then(userGroups => this.setState({ userGroups }))
+      .then(userGroups => this.setState({ userGroups }, () => {
+        this.filterGroups()}))
   }
 
   fetchAllGroups = () => {
@@ -46,19 +57,19 @@ class NewGroupsContainer extends Component {
     )
   }
 
-  fetchGroupMembers() {
-    fetch(`http://localhost:3000/api/v1/groups/${this.state.selectedGroup.id}/users`)
+  fetchGroupMembers(id) {
+    fetch(`http://localhost:3000/api/v1/groups/${id}/users`)
     .then(resp => resp.json())
-    .then(members => this.setState({
-      members
+    .then(selectedGroupMembers => this.setState({
+      selectedGroupMembers
     }))
   }
 
-  fetchGroupEvents() {
-    fetch(`http://localhost:3000/api/v1/groups/${this.state.selectedGroup.id}/events`)
+  fetchGroupEvents(id) {
+    fetch(`http://localhost:3000/api/v1/groups/${id}/events`)
     .then(resp => resp.json())
-    .then(events => this.setState({
-      events
+    .then(selectedGroupEvents => this.setState({
+      selectedGroupEvents
     }))
   }
 
@@ -68,9 +79,15 @@ class NewGroupsContainer extends Component {
       return group.id === parseInt(e.target.dataset.eventId, 10)
     })
     this.setState({
-      selectedGroup: selectedGroup
+      selectedGroup: selectedGroup,
+      showGroup: true
     })
-    console.log(this.state.selectedGroup);
+    console.log("SELECTED GROUP", this.state.selectedGroup);
+    this.fetchGroupEvents(selectedGroup.id)
+    console.log("SELECTED GROUPEVENT", this.state.selectedGroupEvents);
+    this.fetchGroupMembers(selectedGroup.id)
+    console.log("SELECTED GROUP MEMBERS", this.state.selectedGroupMembers);
+
   }
 
   filterGroups = () => {
@@ -96,19 +113,39 @@ class NewGroupsContainer extends Component {
 
   showAllToggle = () => {
     this.setState((prevState) => {
-      return { showAllGroups: !prevState.showAllGroups}
+      return { showNonUserGroups: !prevState.showNonUserGroups}
     })
+  }
+
+  toggleShow = () => {
+    this.setState((prevState) => {
+      return { showGroup: !prevState.showGroup }
+    })
+  }
+
+  renderPage() {
+    if (this.state.showGroup) {
+      return (
+        <div>
+          <GroupCard group={this.state.selectedGroup} user={this.props.user} members={this.state.selectedGroupMembers} events={this.state.selectedGroupEvents} toggleShow={this.toggleShow}/*addUserToGroup={this.props.addUserToGroup}*/ />
+          <GroupMembersContainer members={this.state.selectedGroupMembers} />
+          <GroupEventsContainer events={this.state.selectedGroupEvents} user={this.props.user} />
+        </div>
+      )
+    }
+
+    return (
+      <div>
+        <h1>NEW GROUPS CONTAINER</h1>
+        <button type="button" onClick={this.showAllToggle}>{this.state.showNonUserGroups ? "Not In" : "USer Groups"}</button>
+        {this.state.showNonUserGroups ? (<UserGroupsList groups={this.state.nonUserGroups} getGroup={this.getCurrentGroup}/>) : (<UserGroupsList groups={this.state.userGroups} getGroup={this.getCurrentGroup}/>)}
+      </div>
+    )
   }
 
   render() {
     console.log("RENDER", this.state);
-    return (
-      <div>
-        <h1>NEW GROUPS CONTAINER</h1>
-        <button type="button" onClick={this.showAllToggle}>Switch</button>
-        {this.state.showAllGroups ? (<UserGroupsList groups={this.state.nonUserGroups} getGroup={this.getCurrentGroup}/>) : (<UserGroupsList groups={this.state.userGroups} getGroup={this.getCurrentGroup}/>)}
-      </div>
-    )
+    return this.renderPage()
   }
 }
 

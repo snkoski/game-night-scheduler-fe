@@ -92,7 +92,7 @@ class Application extends Component {
           <PrivateRoute path="/welcome" loggedIn={loggedIn} component={Welcome} />
 
           <Route path="/groups" render={((props) => {
-            return <NewGroupsContainer user={this.state.auth.currentUser}/>
+            return <NewGroupsContainer {...props} user={this.state.auth.currentUser}/>
           })} />
 
           <Route path="/login" render={(() => {

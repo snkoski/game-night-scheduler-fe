@@ -1,10 +1,12 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { Route } from 'react-router-dom';
 
 import UserGroupsList from './UserGroupsList';
 import GroupCard from './GroupCard';
 import GroupMembersContainer from './GroupMembersContainer';
 import GroupEventsContainer from './GroupEventsContainer';
+import GroupShow from './GroupShow';
 
 class NewGroupsContainer extends Component {
   constructor(props) {
@@ -19,7 +21,7 @@ class NewGroupsContainer extends Component {
       showNonUserGroups: false,
       showGroup: false
     }
-    this.renderPage = this.renderPage.bind(this)
+    // this.renderPage = this.renderPage.bind(this)
   }
 
   componentDidMount() {
@@ -33,7 +35,7 @@ class NewGroupsContainer extends Component {
   // }
 
   componentDidUpdate(prevProps, prevState) {
-    if (this.props.user !== prevProps.user) {
+    if (this.props !== prevProps) {
       this.fetchUserGroups()
       this.fetchAllGroups()
     }
@@ -123,29 +125,43 @@ class NewGroupsContainer extends Component {
     })
   }
 
-  renderPage() {
-    if (this.state.showGroup) {
-      return (
-        <div>
-          <GroupCard group={this.state.selectedGroup} user={this.props.user} members={this.state.selectedGroupMembers} events={this.state.selectedGroupEvents} toggleShow={this.toggleShow}/*addUserToGroup={this.props.addUserToGroup}*/ />
-          <GroupMembersContainer members={this.state.selectedGroupMembers} />
-          <GroupEventsContainer events={this.state.selectedGroupEvents} user={this.props.user} />
-        </div>
-      )
-    }
-
-    return (
-      <div>
-        <h1>NEW GROUPS CONTAINER</h1>
-        <button type="button" onClick={this.showAllToggle}>{this.state.showNonUserGroups ? "Not In" : "USer Groups"}</button>
-        {this.state.showNonUserGroups ? (<UserGroupsList groups={this.state.nonUserGroups} getGroup={this.getCurrentGroup}/>) : (<UserGroupsList groups={this.state.userGroups} getGroup={this.getCurrentGroup}/>)}
-      </div>
-    )
-  }
+  // renderPage() {
+  //   if (this.state.showGroup) {
+  //     return (
+  //         // <GroupShow group={this.state.selectedGroup} user={this.props.user} members={this.state.selectedGroupMembers} events={this.state.selectedGroupEvents}/>
+  //         <Route path={this.props.match.url + "/" + `${this.state.selectedGroup.id}`} render={((props) => {
+  //           return <GroupShow {...props} group={this.state.selectedGroup} user={this.props.user} members={this.state.selectedGroupMembers} events={this.state.selectedGroupEvents}/>
+  //         })} />
+  //     )
+  //   }
+  //
+  //   return (
+  //     <div>
+  //       <h1>NEW GROUPS CONTAINER</h1>
+  //       <button type="button" onClick={this.showAllToggle}>{this.state.showNonUserGroups ? "Not In" : "User Groups"}</button>
+  //       {this.state.showNonUserGroups ? (<UserGroupsList groups={this.state.nonUserGroups} getGroup={this.getCurrentGroup}/>) : (<UserGroupsList groups={this.state.userGroups} getGroup={this.getCurrentGroup}/>)}
+  //       <Route path={this.props.match.url + "/" + `${this.state.selectedGroup.id}`} render={((props) => {
+  //         return <GroupShow {...props} group={this.state.selectedGroup} user={this.props.user} members={this.state.selectedGroupMembers} events={this.state.selectedGroupEvents}/>
+  //       })} />
+  //     </div>
+  //   )
+  // }
 
   render() {
     console.log("RENDER", this.state);
-    return this.renderPage()
+    // return this.renderPage()
+    return (
+      <div>
+        {!this.state.showGroup && <div><h1>NEW GROUPS CONTAINER</h1>
+          <button type="button" onClick={this.showAllToggle}>{this.state.showNonUserGroups ? "Not In" : "User Groups"}</button>
+          {this.state.showNonUserGroups ? (<UserGroupsList groups={this.state.nonUserGroups} getGroup={this.getCurrentGroup}/>) : (<UserGroupsList groups={this.state.userGroups} getGroup={this.getCurrentGroup}/>)}</div>}
+
+
+        <Route path={this.props.match.url + "/" + `${this.state.selectedGroup.id}`} render={((props) => {
+          return <GroupShow {...props} group={this.state.selectedGroup} user={this.props.user} members={this.state.selectedGroupMembers} events={this.state.selectedGroupEvents} toggleShow={this.toggleShow}/>
+        })} />
+      </div>
+    )
   }
 }
 

@@ -9,6 +9,7 @@ import SignupForm from './components/SignupForm';
 import UserHome from './components/UserHome';
 import NewEventForm from './components/eventComponents/NewEventForm';
 import NewGroupsContainer from './components/groupComponents/NewGroupsContainer';
+import NewGamesContainer from './components/gameComponents/NewGamesContainer';
 
 import PrivateRoute from './components/PrivateRoute';
 import AddPropsToRoute from './components/AddPropsToRoute';
@@ -93,6 +94,10 @@ class Application extends Component {
 
           <Route path="/groups" render={((props) => {
             return <NewGroupsContainer {...props} user={this.state.auth.currentUser}/>
+          })} />
+
+          <Route path="/games" render={((props) => {
+            return <NewGamesContainer {...props} user={this.state.auth.currentUser} />
           })} />
 
           <Route path="/login" render={(() => {

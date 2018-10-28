@@ -158,7 +158,7 @@ class NewGroupsContainer extends Component {
 
 
         <Route path={this.props.match.url + "/" + `${this.state.selectedGroup.id}`} render={((props) => {
-          return <GroupShow {...props} group={this.state.selectedGroup} user={this.props.user} members={this.state.selectedGroupMembers} events={this.state.selectedGroupEvents} toggleShow={this.toggleShow}/>
+          return <GroupShow {...props} group={this.state.selectedGroup} user={this.props.user} members={this.state.selectedGroupMembers} events={this.state.selectedGroupEvents} toggleShow={this.toggleShow} show={this.state.showGroup}/>
         })} />
       </div>
     )

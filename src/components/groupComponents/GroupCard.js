@@ -66,7 +66,6 @@ class GroupCard extends Component {
         {/* {!member ? <Button className="link" onClick={this.joinGroup}>Join Group</Button> : null } */}
 
         {/* {this.props.getCurrentGroup ? <Button onClick={() => this.props.getCurrentGroup(this.props.group)}>See Group </Button> : null} */}
-        <button onClick={this.props.toggleShow}>Back</button>
       </div>
     )
   }

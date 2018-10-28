@@ -23,7 +23,7 @@ export default class NavBar extends Component {
           <Icon name="home" size="large" />
           <p>Home</p>
         </Menu.Item>
-        <Menu.Item as={NavLink} to="/home/games" name="games">
+        <Menu.Item as={NavLink} to="/games" name="games">
 
           <p>Games</p>
         </Menu.Item>
